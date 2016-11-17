@@ -29,4 +29,4 @@ _[more screenshots](https://github.com/Deconimus/mangaddict/tree/master/screensh
 
 - CTRL+E opens a context-menu when available.
 
-- L enters locked-width mode when reading
+- L enters/leaves locked-width mode when reading
