@@ -1,0 +1,18 @@
+Loading GUIRes.. done.
+Loaded manga info.
+Loaded Fonts.
+Opened ImageView with "H:/Mangas/The Gamer/0012 -/004.jpg".
+java -jar "D:\Workspace\pixelated-vision\trunk\MangAddict\res\bin\mangadl\mangadl.jar" -d "Boku wa Mari no Naka" --noinput 
+
+Downloading or updating "Boku wa Mari no Naka"
+
+Starting a WebClient to run javascript code to surpass adult-content warnings.
+Just ignore the following warning(s)..
+
+Apr 27, 2016 3:56:55 AM com.gargoylesoftware.htmlunit.WebClient printContentIfNecessary
+INFO: statusCode=[503] contentType=[text/html]
+java -jar "D:\Workspace\pixelated-vision\trunk\MangAddict\res\bin\mangadl\mangadl.jar" -d Bleach --noinput 
+
+Downloading or updating "Bleach"
+
+All done.

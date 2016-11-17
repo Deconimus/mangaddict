@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<title>Matsui Yuusei[a] [td] [td valign=top style=min-width -100px] [a href=searchartistMATSUI+Yuusei style=color -#666]Matsui Yuusei[a] [td] [td valign=top] [a href=http -mangafox.mesearchgenresAction]Action[a], [a href=http -mangafox.mesearchgenresAdventure]Adventure[a], [a href=http -mangafox.mesearchgenresComedy]Comedy[a], [a href=http -mangafox.mesearchgenresOne Shot]One Shot[a], [a href=http -mangafox.mesearchgenresShounen]Shounen[a] [td] [tr] [table] [div][div style=width -702px;float -left][div class=advimg72890 id=ad600x90 style=border - none;width - 600px;margin - 0 auto;padding -15px;display -none;] [p style=font-weight - bolder;text-align - left;]Advertisement[p] [a href=# clas ] [a][div][script] var add_data = '[{id -121,img_url -pc.manga_1460966922.jpgv=1460966922,manga_desc -null,font_size -null,banner_title -null,site_url -http -www.mangahere.cotopicgod_tsukkomis_show_the_tsukkomi_is_everythingutm_source=mfpctopic&amp;utm_medium=phome&amp;utm_campaign=mfptop,ios_url -null,andriod_url -null,new_window -1,position -pc.manga,banner_order -null,status -1,throw_all -1,last_updated_time -1460966994,banner_id -null,banner_type -null,background -null},{id -59,img_url -pc.manga_1462328767.jpgv=1462328767,manga_desc -null,font_size -null,banner_title -null,site_url -http -www.mangatown.comlists37025utm_source=mfpclists&amp;utm_medium=pmanga&amp;utm_campaign=mfplists,ios_url -null,andriod_url -null,new_window -1,position -pc.manga,banner_order -null,status -1,throw_all -1,last_updated_time -1462328767,banner_id -null,banner_type -null,background -null},{id -11,img_url -pc.manga_1459232077.jpgv=1459232077,manga_desc -null,font_size -null,banner_title -null,site_url -http -orzzzz.comacgutm_source=mf&amp;utm_medium=banner&amp;utm_campaign=mfbanner,ios_url -null,andriod_url -null,new_window -1,position -pc.manga,banner_order -null,status -1,throw_all -1,last_updated_time -1459232077,banner_id -null,banner_type -null,background -null}]'; add_data = eval(add_data); var store_url = 'http -c.mfcdn.netstorebanners'; var add_length = add_data.length; if(add_length]0){ var adDiv = document.getElementById(ad600x90); var randomKey = Math.floor(Math.random()add_length); var banner = add_data[randomKey]; var a_link = adDiv.getElementsByTagName('a')[0]; a_link.setAttribute('href',banner.site_url); if(banner.new_window == 1){ a_link.setAttribute('target','_blank'); } var img_html = document.createElement('img'); img_html.setAttribute('src',(store_url+banner.img_url)); a_link.appendChild(img_html); var ad_style = adDiv.getAttribute('style'); ad_style = ad_style.replace('display -none','display -block'); adDiv.setAttribute('style',ad_style); }[script][div][div id=discussion_placeholder][div][div id=chapters ] [a href=javascript -void(0); id=all class=expandall]Expand All[a] [h2 style=font-size -20px][a href=http -mangakoi.commangatokyo_depart_sensou_taikenki target=_blank style=font-size - 20px;color -#8b2f20;font-weight - normal;text-decoration -none;cursor - default] TOKYO DEPART SENSOU TAIKENKI [a] Chapters[h2][hr] [div class=slide][span class=collapse][span][h3 class=volume]Volume Not Available[span] Chapter 0[span][h3][div][ul class=chlist style=display -block] [li] [div] [span class=date]Feb 4, 2012[span] [a class=edit href=http -action.mangafox.mechapter.phpchapter_id=156341][span class=miniedit][span][a] [h3] [a href=http -mangafox.memangatokyo_depart_sensou_taikenkic0001.html title= class=tips]Tokyo Depart Sensou Taikenki 0[a] [h3] [div] [li] [ul] [div][div id=discussion ][a href=http -forums.mangafox.meforumdisplay.phpf=5220&amp;prefixid=m10011 class=forum rel=nofollow]Let's Go Discuss!![a][h6 style=font-size -20px]TOKYO DEPART SENSOU TAIKENKI Discussion[h6][hr][ul class=tplist][li class=topic][span class=date]Jan 12, 2013 12 -55am[span][span class=title][a href=http -forums.mangafox.meshowthread.phpt=365895 target=_blank title=Continue continue continue!!!! rel=nofollow]The Merchant Wilderness Salesman[a][span][span class=author]by [a href=http -forums.mangafox.memember.phpfind=lastposter&amp;t=365895 target=_blank rel=nofollow]Yarramie[a][span][li][ul][div][div][script type=textjavascript]var sid=10011;var switchTo5x=true;$LAB.queueScript(http -w.sharethis.combuttonbuttons.js).queueWait(function(){stLight.options({publisher -'2c989003-877d-472f-8054-0185c722ab72',servicePopup - true});});[script][div class=clear gap][div][!-- footer --][div id=footer][p class=affiliates][a href=http -www.mangatown.com]Hot</title>
+	<artist>Matsui Yuusei</artist>
+	<author>Matsui Yuusei</author>
+	<status>Completed</status>
+	<url>http://mangafox.me/manga/tokyo_depart_sensou_taikenki/</url>
+	<released>2011</released>
+	<synopsis>&lt;a href=&lt;a href=&lt;a href=&lt;a href=Shot/&gt;One Shot&lt;/a&gt;, &lt;a href= &lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;/div&gt;&lt;div style=width:702px; float: left&gt;&lt;div class=advimg72890 id=ad600x90 style=border: none; width: 600px; margin: 0 auto; padding:15px; display: none;&gt; &lt;p style=font-weight: bolder; text-align: left;&gt;Advertisement</synopsis>
+	<genres>
+		<genre>Action</genre>
+		<genre>Adventure</genre>
+		<genre>Comedy</genre>
+		<genre>One Shot</genre>
+		<genre>Shounen</genre>
+	</genres>
+	<poster>01.jpg</poster>
+	<lastPage>-1</lastPage>
+	<lastChapter>-1.0</lastChapter>
+	<mal_id>-1</mal_id>
+	<poprank>13</poprank>
+	<lockedWidth>-1</lockedWidth>
+	<lastReadMillis>0</lastReadMillis>
+	<lastChapterMillis>0</lastChapterMillis>
+	<readChapters></readChapters>
+</root>

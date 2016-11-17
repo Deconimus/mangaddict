@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<imageView>
+		<backgroundColor>0</backgroundColor>
+		<clockSize>48</clockSize>
+		<showTime>true</showTime>
+		<showPageNr>true</showPageNr>
+		<alwaysShowChapter>true</alwaysShowChapter>
+		<debug>false</debug>
+	</imageView>
+	<video>
+		<width>0</width>
+		<height>0</height>
+		<targetFPS>-1</targetFPS>
+		<showFPS>false</showFPS>
+		<bicubicFiltering>false</bicubicFiltering>
+		<monitor>0</monitor>
+		<dodgeTaskbar>0</dodgeTaskbar>
+		<windowDecoration>false</windowDecoration>
+	</video>
+	<menu>
+		<flavor>2</flavor>
+		<mangaMode>0</mangaMode>
+		<background>steins_gate_01.png</background>
+		<download_background>hyouka_01.png</download_background>
+		<settings_background>psycho_pass_03.jpg</settings_background>
+		<reloadPopularAfterDays>3</reloadPopularAfterDays>
+		<reloadSearchAfterDays>1</reloadSearchAfterDays>
+		<searchHistoryMax>25</searchHistoryMax>
+		<glassAlpha>0.125</glassAlpha>
+	</menu>
+	<general>
+		<bootInto>0</bootInto>
+		<mangaDir>manga</mangaDir>
+		<metaIn>H:/Mangas/</metaIn>
+		<mangadlPath></mangadlPath>
+		<mangaAutoUpdate>true</mangaAutoUpdate>
+		<updateEveryHours>24</updateEveryHours>
+		<lastUpdated>1468778734221</lastUpdated>
+	</general>
+	<MAL>
+		<userName></userName>
+		<password></password>
+		<sync>false</sync>
+	</MAL>
+</root>
