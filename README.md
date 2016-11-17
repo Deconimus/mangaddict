@@ -1,4 +1,5 @@
-MangAddict is an XMBC-like manga reader that lets you download and read manga.
+# MangAddict
+**An XMBC-like manga reader that lets you download and read manga.**
 
 ### Features:
 
