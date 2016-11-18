@@ -154,11 +154,11 @@ public class Web {
 		result = result.replace("&hellip;", "...");
 		result = result.replace("…", "...");
 		result = result.replace("’", "'");
-		result = result.replace("é", "�");
-		result = result.replace("&#233;", "�");
-		result = result.replace("à ", "�");
+		result = result.replace("é", "�");
+		result = result.replace("&#233;", "�");
+		result = result.replace("à ", "�");
 		result = result.replace("“", "\"");
-		result = result.replace("�?", "\"");
+		result = result.replace("�?", "\"");
 		result = result.replace("—", "-");
 		result = result.replace("&#039;", "'");
 		result = result.replace("&amp;", "&");
