@@ -1,6 +1,9 @@
 # MangAddict
 **An XMBC-like manga reader that lets you download and read manga.**
 
+![alt tag](https://github.com/Deconimus/mangaddict/blob/master/screenshots/prev.jpg)
+_[more screenshots](https://github.com/Deconimus/mangaddict/tree/master/screenshots)_
+
 ### Features:
 
 - search and download Manga
@@ -26,4 +29,4 @@
 
 - CTRL+E opens a context-menu when available.
 
-- L enters locked-width mode when reading
+- L toggles locked-width mode when reading
