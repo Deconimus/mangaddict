@@ -650,6 +650,19 @@ public class ImageView extends Scene {
 	
 	private void nextPage() {
 		
+		if (curFileDirInd == chapfiles.size()-1 && nextchapfiles == null) {
+			
+			exitView();
+			
+			MangaInfo info = Mangas.get(mangaTitle);
+			info.lastPage = -1;
+			info.lastChapter = -1;
+			
+			saveInfo(info);
+			
+			return;
+		}
+		
 		if (cached[CACHED_BACK+1] == null) {
 			
 			pageActionQueue = 1;
@@ -674,7 +687,6 @@ public class ImageView extends Scene {
 				
 				cached[i] = cached[i+1];
 				cachFiles[i] = cachFiles[i+1];
-				
 			}
 			
 			cachFiles[cachFiles.length-1] = null;
@@ -692,6 +704,7 @@ public class ImageView extends Scene {
 			if (chapterChanged) { saveLastRead(); }
 			
 			pageturned = 1;
+			
 		}
 		
 	}
@@ -1142,10 +1155,10 @@ public class ImageView extends Scene {
 	private void updatePageInfo() {
 		
 		String fn = cachFiles[CACHED_BACK].getName().trim();
-		info_pageNr = Integer.parseInt(fn.substring(0, fn.lastIndexOf(".")).trim());
+		info_pageNr = parseExtraSafely(fn);
 		
 		fn = chapfiles.get(chapfiles.size()-1).getName().trim();
-		info_pages = Integer.parseInt(fn.substring(0, fn.lastIndexOf(".")).trim());
+		info_pages = parseExtraSafely(fn);
 		
 		buildChapterStrings();
 		
@@ -1162,6 +1175,35 @@ public class ImageView extends Scene {
 			
 		} catch (Exception e) {}
 		
+	}
+	
+	private int parseExtraSafely(String s) {
+		
+		String toParse = "";
+		
+		for (int i = 0, len = s.length(); i < len; i++) {
+			
+			char c = s.charAt(i);
+			
+			if (Character.isDigit(c)) {
+				
+				toParse += c;
+				
+			} else if (!toParse.isEmpty()) {
+				
+				break;
+			}
+		}
+		
+		int n = 0;
+		
+		if (!toParse.isEmpty()) {
+			
+			try { n = Integer.parseInt(toParse); }
+			catch (Exception e) { e.printStackTrace(); }
+		}
+		
+		return n;
 	}
 	
 	private void updateCamZoom() {
@@ -1211,8 +1253,7 @@ public class ImageView extends Scene {
 		info.lockedWidth = lockedZoom ? (int)Math.ceil(lastWidth) : 0;
 		info.lastReadMillis = System.currentTimeMillis();
 		
-		try { info.save(new File(mangdir.getAbsolutePath()+"/_metadata/info.xml")); } catch (Exception e) {}
-		try { info.save(new File(Settings.metaIn+"/"+mangaTitle+"/_metadata/info.xml")); } catch (Exception e) {}
+		saveInfo(info);
 		
 		if (Settings.MAL_sync && MAL.canAuthenticate()) {
 		
@@ -1225,11 +1266,16 @@ public class ImageView extends Scene {
 				}
 				
 			}.start();
-			
 		}
 		
 		Mangas.lastRead = mangaTitle;
 		Mangas.saveGlobalMeta();
+	}
+	
+	private void saveInfo(MangaInfo info) {
+		
+		try { info.save(new File(mangdir.getAbsolutePath()+"/_metadata/info.xml")); } catch (Exception e) {}
+		try { info.save(new File(Settings.metaIn+"/"+mangaTitle+"/_metadata/info.xml")); } catch (Exception e) {}
 	}
 	
 	private void buildChapterStrings() {

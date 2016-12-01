@@ -202,6 +202,7 @@ public class MangaView extends Menu {
 		if (sortMode == 0) { s += "title"; }
 		else if (sortMode == 1) { s += "recently read"; }
 		else if (sortMode == 2) { s += "new updates"; }
+		else if (sortMode == 3) { s += "author"; }
 		
 		float x = titleX + Fonts.roboto.s48.getWidth(title) + 20f * displayScale;
 		float y = titleY + Fonts.roboto.s48.getHeight(title) - 7f * displayScale - g.getFont().getHeight(s);
@@ -248,7 +249,7 @@ public class MangaView extends Menu {
 				
 			} else if ((key == Input.KEY_F && (Main.ctrlDown || Main.altDown)) || key == Input.KEY_F5) {
 				
-				sortMode = (sortMode + 1) % 3;
+				sortMode = (sortMode + 1) % 4;
 				
 				String ft = list.entries.get(list.selected).title;
 				

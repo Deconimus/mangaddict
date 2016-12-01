@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import visionCore.dataStructures.Tuple;
+import visionCore.dataStructures.tuples.Tuple;
 import visionCore.util.Files;
 import visionCore.util.Web;
 

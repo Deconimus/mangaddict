@@ -28,8 +28,8 @@ import org.newdawn.slick.opengl.InternalTextureLoader;
 import org.newdawn.slick.opengl.LoadableImageData;
 
 import mangaLib.MangaInfo;
-import visionCore.dataStructures.Triplet;
-import visionCore.dataStructures.Tuple;
+import visionCore.dataStructures.tuples.Triplet;
+import visionCore.dataStructures.tuples.Tuple;
 import visionCore.geom.Color;
 import visionCore.geom.Vector2f;
 import visionCore.math.FastMath;
@@ -38,7 +38,7 @@ import visionCore.util.Files;
 public class MangaList extends MenuList<MangaInfo> {
 
 	
-	public static final int SORT_ALPHABETICALLY = 0, SORT_RECENTLY_READ = 1, SORT_RECENTLY_UPDATED = 2;
+	public static final int SORT_ALPHABETICALLY = 0, SORT_RECENTLY_READ = 1, SORT_RECENTLY_UPDATED = 2, SORT_AUTHOR = 3;
 	
 	
 	public List<Triplet<String, ByteBuffer, ImageData>> startingImgs;
@@ -505,6 +505,9 @@ public class MangaList extends MenuList<MangaInfo> {
 			
 			Collections.sort(entries, (m0, m1) -> -Long.compare(m0.recentChapterMillis, m1.recentChapterMillis));
 			
+		} else if (mode == SORT_AUTHOR) {
+			
+			Collections.sort(entries, (m0, m1) -> m0.author.toLowerCase().trim().compareTo(m1.author.toLowerCase().trim()));
 		}
 		
 	}
