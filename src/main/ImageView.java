@@ -1255,6 +1255,7 @@ public class ImageView extends Scene {
 		
 		saveInfo(info);
 		
+		/*
 		if (Settings.MAL_sync && MAL.canAuthenticate()) {
 		
 			new Thread(){
@@ -1267,6 +1268,7 @@ public class ImageView extends Scene {
 				
 			}.start();
 		}
+		*/
 		
 		Mangas.lastRead = mangaTitle;
 		Mangas.saveGlobalMeta();
