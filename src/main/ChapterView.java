@@ -35,12 +35,17 @@ public class ChapterView extends Menu {
 	
 	public Component cm;
 	
+	public ChapterView tis;
+	
+	
 	public ChapterView(String title) {
 		
 		this(title, null);
 	}
 	
 	public ChapterView(String title, Image poster) {
+		
+		this.tis = this;
 		
 		setBG(GUIRes.menubg);
 		this.title = title.toUpperCase()+" CHAPTERS";
@@ -223,7 +228,6 @@ public class ChapterView extends Menu {
 				mangaPoster = new Image(imgstr);
 				posterPanel.poster = mangaPoster;
 			}
-			
 		}
 		
 	}
@@ -243,13 +247,19 @@ public class ChapterView extends Menu {
 	public void handleInput(int key, char c, boolean pressed) {
 		if (cm != null && !cm.closed) { cm.handleInput(key, c, pressed); return; }
 		
-		super.handleInput(key, c, pressed);
-		
 		if (pressed) {
 			
 			if (key == Input.KEY_ESCAPE || key == Input.KEY_BACK) {
 				
-				exitView();
+				if (getFocus() == chapterList) {
+				
+					exitView();
+					
+				} else if (getFocus() instanceof ContextMenu) {
+					
+					getFocus().onClosing();
+					
+				}
 				
 			} else if ((key == Input.KEY_E && (Main.altDown || Main.ctrlDown)) || key == Input.KEY_F1) {
 				
@@ -257,6 +267,8 @@ public class ChapterView extends Menu {
 			}
 			
 		}
+		
+		super.handleInput(key, c, pressed);
 		
 	}
 	
@@ -289,6 +301,8 @@ public class ChapterView extends Menu {
 			
 			items.add("Remove Bookmark");
 		}
+		
+		items.add("Rename Chapter");
 		
 		cm = new ContextMenu(centerIn, items.toArray(new String[items.size()])){
 			
@@ -328,12 +342,54 @@ public class ChapterView extends Menu {
 					
 					saveInfo();
 					
-				} else if (selected == 3) {
+				} else if (selected == 3 && items.size() == 5) {
 					
 					mangaInfo.lastChapter = -1;
 					mangaInfo.lastPage = -1;
 					
 					saveInfo();
+					
+				} else if (selected == 3 && items.size() == 4) {
+					
+					String name = chapterList.entries.get(chapterList.selected).getName();
+					
+					String prefix = name.substring(0, name.indexOf("-")).trim();
+					name = name.substring(name.indexOf('-')+1).trim();
+					
+					final String nm = name;
+					
+					InputPanel sp = new InputPanel("Rename Chapter"){
+						
+						@Override
+						public void onAction(String search) {
+							search = MangaInfo.cleanTitle(search);
+							search = search.replace("/", "").replace("\\", "").replace("  ", " ").trim();
+							
+							if (!search.equals(nm)) {
+							
+								File src = chapterList.entries.get(chapterList.selected);
+								File dst = new File(src.getParentFile().getAbsolutePath().replace("\\", "/")+"/"+prefix+" - "+search);
+								
+								Files.moveDir(src, dst);
+								
+								chapterList.entries.set(chapterList.selected, dst);
+							}
+							
+							tis.setFocus(chapterList);
+						}
+						
+						@Override
+						public void onCancel() {
+							
+							tis.setFocus(chapterList);
+						}
+						
+					};
+					
+					sp.txt = name;
+					
+					components.add(sp);
+					setFocus(sp);
 				}
 				
 				closed = true;
