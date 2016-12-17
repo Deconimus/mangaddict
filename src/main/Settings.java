@@ -96,7 +96,7 @@ public class Settings {
 		video_dodgeTaskbar = 0;
 		video_bicubicFiltering = false;
 		
-		mangaDir = "H:/Mangas/";
+		mangaDir = "manga";
 		metaIn = mangaDir+"";
 		mangadlPath = "";
 		mangaAutoUpdate = true;

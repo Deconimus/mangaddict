@@ -372,6 +372,9 @@ public class ChapterView extends Menu {
 								
 								Files.moveDir(src, dst);
 								
+								File renamed = new File(dst.getAbsolutePath().replace("\\", "/")+"/.renamed");
+								if (!renamed.exists()) { try { renamed.createNewFile(); } catch (Exception e) {} }
+								
 								chapterList.entries.set(chapterList.selected, dst);
 							}
 							
