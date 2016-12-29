@@ -15,7 +15,7 @@ import org.newdawn.slick.SlickException;
 
 public class ScreenShooter {
 
-public static void makeScreenShot(Graphics g) throws SlickException {
+	public static void makeScreenShot(Graphics g) throws SlickException {
 		
 		final String filename = "Screenshot - ["+System.currentTimeMillis()+"].png";
 		

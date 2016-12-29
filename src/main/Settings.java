@@ -96,7 +96,7 @@ public class Settings {
 		video_dodgeTaskbar = 0;
 		video_bicubicFiltering = false;
 		
-		mangaDir = "manga";
+		mangaDir = Main.abspath+"/manga";
 		metaIn = mangaDir+"";
 		mangadlPath = "";
 		mangaAutoUpdate = true;
@@ -223,6 +223,12 @@ public class Settings {
 			mangaDir = mangaDir.replace("\\", "/");
 			while (mangaDir.endsWith("/")) { mangaDir = mangaDir.substring(0, mangaDir.length()-1); }
 			mangaDir = mangaDir.trim();
+			
+			if (!mangaDir.startsWith("/") && !(mangaDir.length() > 1 && mangaDir.charAt(1) == ':')) {
+				
+				mangaDir = Main.abspath+"/"+mangaDir;
+				if (metaIn == null || metaIn.equals(Main.abspath+"/manga")) { metaIn = mangaDir+""; }
+			}
 		}
 		
 		if (mangadlPath == null) { mangadlPath = ""; }
@@ -342,6 +348,13 @@ public class Settings {
 				if (field.getName().equals("MAL_password")) {
 					
 					val = encrypt(MAL_password);
+					
+				} else if (field.getName().equals("mangaDir") || field.getName().equals("metaIn")) {
+					
+					if (val.startsWith(Main.abspath+"/")) {
+						
+						val = val.substring((Main.abspath+"/").length());
+					}
 				}
 				
 				section.addElement(fieldName).setText(val);
