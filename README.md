@@ -18,12 +18,15 @@ _[more screenshots](https://github.com/Deconimus/mangaddict/tree/master/screensh
 
 ### Quickstart Guide:
 
-- Make sure you have Java installed.
+- Make sure Java (8 or up) is installed and in your path variables.
+- Download the latest release.
+- Unzip the archive.<br>(You can move the folder anywhere you want, as long as it will have write permissions there.)
+- Run the program.
+ - On Windows run the "MangAddict.bat" file. 
+ - On Linux run the .jar file with the openGL natives passed as an argument. <br>
+  (In the form of "java java -Djava.library.path="bin/natives/windows&linux" -jar MangAddict.jar").
 
-- Unzip the archive and start the file called "MangAddict.bat" (on windows, I don't think I have to explain how to start a .jar to the linux folks)
-
-- If nothing happens, go to step 1
-
+If nothing happens while trying to run the program, make sure you got the first step right. The easiest way to check if java is in your path is to run "java" in a terminal or inside cmd if on windows. If the command isn't found, it's not installed properly.
 
 ### Hotkeys:
 
