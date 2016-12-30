@@ -153,19 +153,6 @@ public class Main extends BasicGame {
 		
 		Display.setResizable(false);
 		
-		/*
-		JFrame frame = new JFrame("asd");
-		frame.setBounds((int)x, (int)y, (int)video_resolution.x, (int)video_resolution.y);
-		frame.setUndecorated(true);
-		frame.setLayout(null);
-		
-		Canvas canvas = new Canvas();
-		canvas.setBounds(0, 0, (int)video_resolution.x, (int)video_resolution.y);
-		frame.getContentPane().add(canvas);
-		
-		frame.setVisible(true);
-		*/
-		
 		display.setForceExit(false);
 		
 		mainthread = Thread.currentThread();
@@ -189,7 +176,6 @@ public class Main extends BasicGame {
 		}
 		
 		Settings.save();
-		
 	}
 
 	@Override

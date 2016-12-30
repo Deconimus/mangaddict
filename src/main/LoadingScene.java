@@ -5,6 +5,8 @@ import java.io.File;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import mangaLib.MangaInfo;
+
 public class LoadingScene extends Scene {
 
 	private void load() {
@@ -53,10 +55,19 @@ public class LoadingScene extends Scene {
 				Main.currentScene = new DownloadMenu();
 				
 			} else {
-			
-				Main.currentScene = ImageView.openLastRead();
-				if (Main.currentScene == null) { try { Main.currentScene = new ChapterView(Mangas.lastRead); } catch (Exception e) {} }
-				if (Main.currentScene == null) { Main.currentScene = new MangaView(Settings.menu_mangaMode, Mangas.lastRead); }
+				
+				MangaInfo manga = Mangas.get(Mangas.lastRead);
+				
+				if (manga == null || (manga.lastChapter < 0 || manga.lastPage < 0)) {
+					
+					Main.currentScene = new MangaView(Settings.menu_mangaMode, Mangas.lastRead);
+					
+				} else {
+					
+					Main.currentScene = ImageView.openLastRead();
+					if (Main.currentScene == null) { try { Main.currentScene = new ChapterView(Mangas.lastRead); } catch (Exception e) {} }
+					if (Main.currentScene == null) { Main.currentScene = new MangaView(Settings.menu_mangaMode, Mangas.lastRead); }
+				}
 			}
 			
 		} else if (Settings.bootInto == Settings.BOOT_LAST_CHAPTER) {

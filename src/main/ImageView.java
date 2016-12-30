@@ -657,6 +657,7 @@ public class ImageView extends Scene {
 			MangaInfo info = Mangas.get(mangaTitle);
 			info.lastPage = -1;
 			info.lastChapter = -1;
+			info.read = true;
 			
 			saveInfo(info);
 			
