@@ -296,7 +296,7 @@ public class DownloadMenu extends Menu {
 		loadedPopular = true;
 		DownloadMenu tis = this;
 		
-		MangaTable mt = new MangaTable(new File(Main.abspath+"/res/bin/mangadl/tmp/hot/"), new Rectangle(tablepane), true){
+		MangaTable mt = new MangaTable(new File(Main.abspath+"/res/bin/mangadl/tmp/hot/"), new Rectangle(tablepane), true, 0){
 			
 			@Override
 			public void handleInput(int key, char c, boolean pressed) {
@@ -489,7 +489,7 @@ public class DownloadMenu extends Menu {
 		
 		final String sq = search;
 		
-		MangaTable mt = new MangaTable(new File(Main.abspath+"/res/bin/mangadl/tmp/"+search+"/"), new Rectangle(tablepane), true){
+		MangaTable mt = new MangaTable(new File(Main.abspath+"/res/bin/mangadl/tmp/"+search+"/"), new Rectangle(tablepane), true, 0){
 			
 			@Override
 			public void handleInput(int key, char c, boolean pressed) {
@@ -532,7 +532,7 @@ public class DownloadMenu extends Menu {
 		
 		DownloadMenu tis = this;
 		
-		MangaTable mt = new MangaTable(new File(Settings.metaIn), f -> Mangas.get(f.getName()) == null, new Rectangle(tablepane), true){
+		MangaTable mt = new MangaTable(new File(Settings.metaIn), f -> Mangas.get(f.getName()) == null, new Rectangle(tablepane), true, 0){
 			
 			@Override
 			public void handleInput(int key, char c, boolean pressed) {
@@ -692,7 +692,7 @@ public class DownloadMenu extends Menu {
 		
 		File fl = new File(Main.abspath+"/res/bin/mangadl/tmp/"+dr);
 		
-		MangaTable mt = new MangaTable(fl, f -> Mangas.get(f.getName()) == null, new Rectangle(tablepane), true){
+		MangaTable mt = new MangaTable(fl, f -> Mangas.get(f.getName()) == null, new Rectangle(tablepane), true, 0){
 			
 			@Override
 			public void handleInput(int key, char c, boolean pressed) {

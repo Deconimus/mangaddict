@@ -58,23 +58,26 @@ public class MangaList extends MenuList<MangaInfo> {
 	public float loadingRot;
 	
 	
-	public MangaList(File metadir, Rectangle pane, boolean loadMetaFromDir) {
+	public MangaList(File metadir, Rectangle pane, boolean loadMetaFromDir, int selected) {
 		
-		this(new ArrayList<MangaInfo>(), metadir, null, pane, loadMetaFromDir);
+		this(new ArrayList<MangaInfo>(), metadir, null, pane, loadMetaFromDir, selected);
 	}
 	
-	public MangaList(File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir) {
+	public MangaList(File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, int selected) {
 		
-		this(new ArrayList<MangaInfo>(), metadir, dirFilter, pane, loadMetaFromDir);
+		this(new ArrayList<MangaInfo>(), metadir, dirFilter, pane, loadMetaFromDir, selected);
 	}
 	
-	public MangaList(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir) {
+	public MangaList(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, int selected) {
 		
-		this(entries, metadir, dirFilter, pane, MenuList.MODE_VERTICAL, true, false);
+		this(entries, metadir, dirFilter, pane, MenuList.MODE_VERTICAL, true, false, selected);
 	}
 	
-	protected MangaList(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, int mode, boolean loadMetaFromDir, boolean drawPanels) {
+	
+	protected MangaList(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, int mode, boolean loadMetaFromDir, boolean drawPanels, int selected) {
 		super(entries, pane, getEntrySize(mode), mode, drawPanels);
+		
+		super.setFocus(selected);
 		
 		this.posters = new HashMap<String, Image>();
 		
@@ -97,12 +100,24 @@ public class MangaList extends MenuList<MangaInfo> {
 		startingImgs = Collections.synchronizedList(new ArrayList<Triplet<String, ByteBuffer, ImageData>>());
 		for (int i = 0; i < entries.size(); i++) { startingImgs.add(null); }
 		
+		List<MangaInfo> entriesInLoadOrder = entries;
+		
+		if (selected != 0) {
+			
+			HashMap<String, Integer> distMap = new HashMap<String, Integer>();
+			for (int i = 0; i < entries.size(); i++) { distMap.put(entries.get(i).title, Math.abs(i - selected)); }
+			
+			entriesInLoadOrder = new ArrayList<MangaInfo>(entries.size());
+			entriesInLoadOrder.addAll(entries);
+			Collections.sort(entriesInLoadOrder, (i0, i1) -> Integer.compare(distMap.get(i0.title), distMap.get(i1.title)));
+		}
+		
 		ExecutorService exec = Executors.newCachedThreadPool();
 		
 		try {
 		
-			for (int i = 0, size = entries.size(); i < size; i++) {
-				MangaInfo info = entries.get(i);
+			for (int i = 0, size = entriesInLoadOrder.size(); i < size; i++) {
+				MangaInfo info = entriesInLoadOrder.get(i);
 				
 				//p2l.add(new Tuple<String, String>(info.title, info.poster));
 				

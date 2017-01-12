@@ -873,7 +873,7 @@ public class ImageView extends Scene {
 			
 			upHold = pressed ? 0 : -1;
 			
-			if (pressed) { 
+			if (pressed) {
 				
 				if (!shiftHold) {
 					
@@ -915,26 +915,34 @@ public class ImageView extends Scene {
 		
 		if (pressed) {
 			
+			float imgWidth = (cached[curImg] == null) ? 0f : (float)(getImgRenderWidth(cached[curImg]) * camZ);
+			
 			if (key == Input.KEY_LEFT) {
 				
-				if (!ctrlHold) { prevPage(); }
-				else { 
+				if (ctrlHold || imgWidth >= Display.getWidth()) {
 					
 					leftHold = 0;
 					
 					camX += scrollStep;
 					clampCam();
+					
+				} else {
+					
+					prevPage();
 				}
 				
 			} else if (key == Input.KEY_RIGHT) {
 				
-				if (!ctrlHold) { nextPage(); }
-				else {
+				if (ctrlHold || imgWidth >= Display.getWidth()) {
 					
 					rightHold = 0;
 					
 					camX -= scrollStep;
 					clampCam();
+					
+				} else {
+					
+					nextPage();
 				}
 				
 			} else if (key == Input.KEY_LALT || key == Input.KEY_RALT) {

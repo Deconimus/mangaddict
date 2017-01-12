@@ -92,7 +92,7 @@ public class MangaView extends Menu {
 			Rectangle listpane = new Rectangle(200f * dsh, Display.getHeight() - POSTER_HEIGHT * 0.75f * displayScale - 100f * displayScale,
 												Display.getWidth() - 200f * 2f * dsh, POSTER_HEIGHT * 0.75f * displayScale);
 			
-			list = new MangaPosterRow(infos, new File(Settings.metaIn), null, listpane, false) {
+			list = new MangaPosterRow(infos, new File(Settings.metaIn), null, listpane, false, lastTitleInd) {
 				
 				@Override
 				public void onAction(MangaInfo entry) {
@@ -117,7 +117,7 @@ public class MangaView extends Menu {
 			
 			Rectangle listpanel = new Rectangle(contentpanel.x + 30f, contentpanel.y + 20f, contentpanel.width - 60f, contentpanel.height - 40f);
 			
-			list = new MangaList(infos, new File(Settings.metaIn), null, listpanel, false){
+			list = new MangaList(infos, new File(Settings.metaIn), null, listpanel, false, lastTitleInd){
 				
 				@Override
 				public void update(int delta) throws SlickException {
@@ -173,7 +173,7 @@ public class MangaView extends Menu {
 			Rectangle listpanel = new Rectangle(x, contentpanel.y + 20f * displayScale,
 												w, contentpanel.height - 40f * displayScale);
 			
-			list = new MangaTable(infos, new File(Settings.metaIn), null, listpanel, false, true) {
+			list = new MangaTable(infos, new File(Settings.metaIn), null, listpanel, false, true, lastTitleInd) {
 				
 				@Override
 				public void onAction(MangaInfo entry) {

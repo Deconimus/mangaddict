@@ -19,13 +19,13 @@ import visionCore.math.FastMath;
 
 public class MangaPosterRow extends MangaList {
 
-	public MangaPosterRow(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir) {
+	public MangaPosterRow(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, int selected) {
 		
-		this(entries, metadir, dirFilter, pane, loadMetaFromDir, false);
+		this(entries, metadir, dirFilter, pane, loadMetaFromDir, false, selected);
 	}
 	
-	public MangaPosterRow(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, boolean drawPanels) {
-		super(entries, metadir, dirFilter, pane, MenuList.MODE_HORIZONTAL, loadMetaFromDir, drawPanels);
+	public MangaPosterRow(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, boolean drawPanels, int selected) {
+		super(entries, metadir, dirFilter, pane, MenuList.MODE_HORIZONTAL, loadMetaFromDir, drawPanels, selected);
 		
 	}
 	

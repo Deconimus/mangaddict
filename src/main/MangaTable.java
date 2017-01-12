@@ -18,18 +18,18 @@ import visionCore.math.FastMath;
 public class MangaTable extends MangaList {
 	
 	
-	public MangaTable(File metadir, Rectangle pane, boolean loadMetaFromDir) {
+	public MangaTable(File metadir, Rectangle pane, boolean loadMetaFromDir, int selected) {
 		
-		this(new ArrayList<MangaInfo>(), metadir, null, pane, loadMetaFromDir, false);
+		this(new ArrayList<MangaInfo>(), metadir, null, pane, loadMetaFromDir, false, selected);
 	}
 	
-	public MangaTable(File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir) {
+	public MangaTable(File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, int selected) {
 		
-		this(new ArrayList<MangaInfo>(), metadir, dirFilter, pane, loadMetaFromDir, false);
+		this(new ArrayList<MangaInfo>(), metadir, dirFilter, pane, loadMetaFromDir, false, selected);
 	}
 	
-	public MangaTable(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, boolean drawPanels) {
-		super(entries, metadir, dirFilter, pane, MenuList.MODE_TABLE, loadMetaFromDir, drawPanels);
+	public MangaTable(List<MangaInfo> entries, File metadir, Predicate<File> dirFilter, Rectangle pane, boolean loadMetaFromDir, boolean drawPanels, int selected) {
+		super(entries, metadir, dirFilter, pane, MenuList.MODE_TABLE, loadMetaFromDir, drawPanels, selected);
 		
 		
 		

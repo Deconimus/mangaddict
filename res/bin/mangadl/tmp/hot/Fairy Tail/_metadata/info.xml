@@ -12,7 +12,6 @@
 		<genre>Action</genre>
 		<genre>Adventure</genre>
 		<genre>Comedy</genre>
-		<genre>Drama</genre>
 		<genre>Ecchi</genre>
 		<genre>Fantasy</genre>
 		<genre>Shounen</genre>
@@ -21,7 +20,7 @@
 	<lastPage>-1</lastPage>
 	<lastChapter>-1.0</lastChapter>
 	<mal_id>-1</mal_id>
-	<poprank>5</poprank>
+	<poprank>4</poprank>
 	<lockedWidth>-1</lockedWidth>
 	<lastReadMillis>0</lastReadMillis>
 	<recentChapterMillis>0</recentChapterMillis>

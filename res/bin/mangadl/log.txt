@@ -1,29 +1,4 @@
 
-Downloading or updating "6 no Trigger"
-Saving chapter 1 - "Ice Moon":
-
-URL: "http://mangafox.me/manga/6_no_trigger/v01/c001/1.html"
-Chapter consists of 51 pages.
-
-Saved 002.jpg
-Saved 008.jpg
-Saved 017.jpg
-Saved 044.jpg
-Saved 005.jpg
-Saved 007.jpg
-Saved 009.jpg
-Saved 004.jpg
-Saved 010.jpg
-Saved 048.jpg
-Saved 029.jpg
-Saved 015.jpg
-Saved 050.jpg
-Saved 033.jpg
-Saved 016.jpg
-Saved 006.jpg
-Saved 001.jpg
-Saved 018.jpg
-Saved 035.jpg
-Saved 042.jpg
-Saved 013.jpg
-
+Dumping metadata for currently popular manga.
+Loading posters... almost done.
+All done.
