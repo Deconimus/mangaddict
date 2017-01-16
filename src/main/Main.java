@@ -504,7 +504,6 @@ public class Main extends BasicGame {
 			}
 			
 		} catch (Exception e) { e.printStackTrace(); }
-		
 	}
 	
 	public static void setOutStream(boolean keepPrevLog) {
