@@ -17,6 +17,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import components.Component;
+import components.ContextMenu;
+import components.InputPanel;
+import components.MenuList;
+import components.PosterPanel;
 import mangaLib.MangaInfo;
 import visionCore.geom.Color;
 import visionCore.util.Files;

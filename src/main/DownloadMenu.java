@@ -14,6 +14,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import components.ContextMenu;
+import components.InputPanel;
+import components.MangaInfoPanel;
+import components.MangaTable;
+import components.MenuList;
+import components.UpdatingPanel;
 import mangaLib.MangaInfo;
 import visionCore.geom.Color;
 import visionCore.geom.Vector2f;
@@ -151,7 +157,6 @@ public class DownloadMenu extends Menu {
 			
 			loadingRot += UpdatingPanel.ROT_VEL * delta;
 			loadingRot = FastMath.normalizeCircular(loadingRot, 0f, FastMath.PI2);
-			
 		}
 		
 		if (mangadl != null) {
@@ -282,9 +287,7 @@ public class DownloadMenu extends Menu {
 				
 				clearScene();
 				Main.currentScene = new MainMenu(1);
-				
 			}
-			
 		}
 		
 		super.handleInput(key, c, pressed);
@@ -644,30 +647,10 @@ public class DownloadMenu extends Menu {
 		
 		if (entry != null) {
 			
-			String[] buttons = null;
-			
-			if (p2r) {
-				
-				buttons = new String[]{ "Download", "Plan To Read", "Cancel" };
-				
-			} else {
-				
-				buttons = new String[]{ "Download", "Cancel" };
-			}
-			
-			MangaInfoPanel mip = new MangaInfoPanel(entry, metadir, buttons){
-				
-				@Override
-				public void onClosing() {
-					
-					tis.setFocus(tables[sectionList.selected]);
-				}
-				
-			};
+			MangaInfoPanel mip = MangaInfoPanel.getDownloadPanel(tis, tables[sectionList.selected], entry, metadir, p2r);
 			
 			tis.components.add(mip);
 			tis.setFocus(mip);
-			
 		}
 		
 	}

@@ -15,13 +15,13 @@
 	"main": "main.Main",
 	"sourceDirs": ["src"],
 	"imports": [
-				"D:/Workspace/Git/VisionCore/bin",
-				"D:/Workspace/Git/MangaLib/bin",
-				"lib/jinput.jar",
-				"lib/lwjgl.jar",
-				"lib/lwjgl_util.jar",
-				"lib/slick.jar",
-				"lib/dom4j-2.0.0-RC1.jar"
+					"D:/Workspace/Git/VisionCore/bin",
+					"D:/Workspace/Git/MangaLib/bin",
+					"lib/jinput.jar",
+					"lib/lwjgl.jar",
+					"lib/lwjgl_util.jar",
+					"lib/slick.jar",
+					"lib/dom4j-2.0.0-RC1.jar"
 				],
 	"dynImports": [],
 	"dynImportsExt": [],

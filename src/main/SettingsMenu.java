@@ -16,6 +16,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import components.MenuList;
+import components.SettingsList;
 import visionCore.math.FastMath;
 
 public class SettingsMenu extends Menu {

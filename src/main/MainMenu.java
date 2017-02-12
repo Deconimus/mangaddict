@@ -11,6 +11,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import components.MenuList;
 import visionCore.geom.Color;
 import visionCore.math.FastMath;
 

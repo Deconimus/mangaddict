@@ -1,9 +1,8 @@
-package main;
+package components;
 
 import static main.Main.displayScale;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,72 +15,63 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import components.Component;
-import components.MenuList;
-import components.UpdatingPanel;
+import main.Fonts;
+import main.GUIRes;
+import main.ImageFormats;
+import main.Settings;
+import mangaLib.MangaInfo;
 import visionCore.geom.Color;
-import visionCore.math.FastMath;
 import visionCore.util.Files;
 
-// copy-paste from poster select...
+public class PosterSelect extends Component {
 
-public class WallpaperSelect extends Component {
-
-public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
+	
+	public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 	
 	
 	public Rectangle pane;
 	
-	public List<File> imageFiles;
+	public List<File> posterFiles;
 	public Image cache[];
-	public ImageStruct structs[];
+	public ImageStruct[] structs;
 	
-	public AtomicInteger cacheLoadInd, selected;
+	public AtomicInteger selected, cacheLoadInd;
 	
 	public MenuList<File> list;
 	
-	public Field field;
-	public String wallpName, fieldName;
+	public MangaInfo info;
 	
 	public Thread loadThread;
 	
-	public float loadingRot;
 	
-	
-	public WallpaperSelect(Field field, String fieldName, String wallpName) {
+	public PosterSelect(MangaInfo info) {
 		
-		this.field = field;
-		this.fieldName = fieldName;
-		this.wallpName = wallpName;
-		
-		this.loadingRot = 0f;
-		
-		WallpaperSelect tis = this;
-		
-		float w = 1280f * displayScale, h = 830f * displayScale;
+		float w = GUIRes.posterSelect.getWidth() * displayScale, h = GUIRes.posterSelect.getHeight() * displayScale;
 		
 		this.pane = new Rectangle((Display.getWidth() - w) / 2f, 150f * displayScale + (Display.getHeight() - 250f * displayScale - h) / 2f, w, h);
 		
-		File dir = new File(Main.abspath+"/res/wallpaper");
-		if (!dir.exists()) { exit(); }
+		this.info = info;
 		
-		this.imageFiles = Files.getFiles(dir, f -> !f.isDirectory() && ImageFormats.isSupported(f));
-		Collections.sort(this.imageFiles);
+		File dir = new File(Settings.metaIn+"/"+info.title+"/_metadata/posters");
+		if (!dir.exists()) { exit(); return; }
+		
+		this.posterFiles = Files.getFiles(dir, f -> !f.isDirectory() && ImageFormats.isSupported(f));
+		Collections.sort(this.posterFiles);
 		
 		this.selected = new AtomicInteger(0);
-		for (int i = 0; i < imageFiles.size(); i++) {
+		for (int i = 0; i < posterFiles.size(); i++) {
 			
-			if (imageFiles.get(i).getName().equalsIgnoreCase(wallpName)) { selected.set(i); break; }
+			if (posterFiles.get(i).getName().equalsIgnoreCase(info.poster)) { selected.set(i); break; }
 		}
 		
 		this.cache = new Image[CACHED_BACK + 1 + CACHED_FRONT];
 		this.structs = new ImageStruct[cache.length];
 		
-		this.cacheLoadInd = new AtomicInteger(0);
+		this.cacheLoadInd = new AtomicInteger(-1);
 		
-		Rectangle listpane = new Rectangle(pane.x + 30f, pane.y + 20f, (512f - 45f) * displayScale, (830f - 40f) * displayScale);
+		Rectangle listpane = new Rectangle(pane.x + 30f, pane.y + 20f, (512f - 60f) * displayScale, (830f - 40f) * displayScale);
 		
-		this.list = new MenuList<File>(imageFiles, listpane, 53f, MenuList.MODE_VERTICAL, false) {
+		this.list = new MenuList<File>(posterFiles, listpane, 53f, MenuList.MODE_VERTICAL, false){
 			
 			@Override
 			protected void up(boolean bybutton) {
@@ -100,14 +90,14 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 			@Override
 			public void onAction(File entry) {
 				
-				if (tis.wallpName != entry.getName()) {
+				if (!info.poster.equalsIgnoreCase(entry.getName())) {
 				
-					tis.wallpName = entry.getName();
+					info.poster = entry.getName();
 					
-					try { field.set(null, entry.getName()); }
-					catch (Exception e) { e.printStackTrace(); }
+					try { info.save(new File(Settings.mangaDir+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
+					try { info.save(new File(Settings.metaIn+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
 					
-					onWallpaperChange();
+					onPosterChanged();
 					
 				}
 				
@@ -115,31 +105,9 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 			}
 			
 			@Override
-			public void render(Graphics g, float pX, float pY) throws SlickException {
-				
-				int maxEntries = getMaxEntries();
-				
-				Color transp = new Color(1f, 1f, 1f, 0.6f);
-				
-				GUIRes.splitter.startUse();
-				
-				float space = pane.height - maxEntries * entryHeight;
-				
-				for (int i = camera, end = Math.min(camera + maxEntries, entries.size()); i < ((space < 20f * displayScale || end == entries.size()) ? end-1 : end); i++) {
-					
-					GUIRes.splitter.drawEmbedded((int)(-30f * displayScale + pane.x), (int)(pane.y + entryHeight * (i - camera + 1) - 1f), 
-							(int)(pane.width + 20f * displayScale), (int)(GUIRes.splitter.getHeight() * displayScale + 0.5f), transp);
-				}
-				
-				GUIRes.splitter.endUse();
-					
-				super.render(g, pX, pY);
-			}
-			
-			@Override
 			public void renderEntry(Graphics g, File entry, float x, float y, boolean selected, int ind) {
 				
-				if (entry.getName().equals(wallpName)) {
+				if (entry.getName().equals(info.poster)) {
 					
 					float x1 = pane.x + pane.width - (20f + GUIRes.tick.getWidth() + 8f) * displayScale;
 					float y1 = y + (entryHeight - GUIRes.tick.getHeight() * displayScale) * 0.5f;
@@ -151,8 +119,6 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 			}
 			
 		};
-		this.list.drawPanels = false;
-		this.list.drawSplitter = false;
 		this.list.setFocus(selected.get());
 		
 		this.loadThread = new Thread() {
@@ -168,15 +134,15 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 						
 						int fileInd = selected.get() - CACHED_BACK + i;
 						
-						if (fileInd >= 0 && fileInd < imageFiles.size()) {
+						if (fileInd >= 0 && fileInd < posterFiles.size()) {
 						
-							if (structs[i] == null || !imageFiles.get(fileInd).getName().equals(structs[i])) {
+							if (structs[i] == null || !posterFiles.get(fileInd).getName().equals(structs[i].fileName)) {
 								
 								File file = null;
 								
 								try {
 									
-									file = imageFiles.get(fileInd);
+									file = posterFiles.get(fileInd);
 									
 								} catch (Exception e) { e.printStackTrace(); }
 								
@@ -213,12 +179,15 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 		
 	}
 	
+	public void onPosterChanged() {
+		
+		
+		
+	}
+	
 	@Override
 	public void update(int delta) throws SlickException {
 		super.update(delta);
-		
-		loadingRot += UpdatingPanel.ROT_VEL * delta;
-		loadingRot = FastMath.normalizeCircular(loadingRot, 0f, FastMath.PI2);
 		
 		this.list.update(delta);
 		
@@ -227,9 +196,9 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 		for (int i = 0; i < cache.length; i++) {
 			
 			int ind = selected.get() - CACHED_BACK + i;
-			if (ind < 0 || ind >= imageFiles.size()) { continue; }
+			if (ind < 0 || ind >= posterFiles.size()) { continue; }
 			
-			String fileName = imageFiles.get(ind).getName();
+			String fileName = posterFiles.get(ind).getName();
 			
 			if (cache[i] == null && i != cacheLoadInd.get() && structs[i] != null && structs[i].fileName.equals(fileName)) {
 				
@@ -239,7 +208,7 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 			}
 			
 		}
-		
+
 	}
 	
 	@Override
@@ -248,47 +217,26 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 		
 		g.setColor(Color.white);
 		
-		GUIRes.drawContextPane(g, pane);
+		Image img = GUIRes.posterSelect;
 		
-		float x = list.pane.x + list.pane.width + 20f * displayScale;
+		if (img != null) {
 		
-		float w = pane.x + pane.width - x - 20f * displayScale;
-		float scw = w / Display.getWidth();
-		float h = Display.getHeight() * scw;
-		
-		float y = pane.y + (pane.height - h) * 0.5f * displayScale;
-		
-		Image wallp = cache[CACHED_BACK];
-		
-		if (wallp != null) {
-			
-			float sw = w / wallp.getWidth();
-			float sh = h / wallp.getHeight();
-			
-			float scale = Math.max(sw, sh);
-			
-			wallp.getSubImage((int)((wallp.getWidth() - w / scale) * 0.5f), (int)((wallp.getHeight() - h / scale) * 0.5f),
-							  (int)(w / scale), (int)(h / scale)).draw(x, y, w, h);
-			
-		} else {
-			
-			float lx = x + (w - GUIRes.loading.getWidth() * displayScale) * 0.5f;
-			float ly = y + (h - GUIRes.loading.getHeight() * displayScale) * 0.5f;
-			
-			GUIRes.loading.setRotation((loadingRot / FastMath.PI2) * 360f);
-			GUIRes.loading.draw((int)lx, (int)ly, (int)(GUIRes.loading.getWidth() * displayScale), 
-								(int)(GUIRes.loading.getHeight() * displayScale), Menu.flavors[Settings.menu_flavor]);
+			img.draw(pane.x, pane.y, pane.width, pane.height);
 			
 		}
 		
-		g.setColor(Color.grayTone(136));
-		g.drawRect(x, y, w, h, 2);
+		Image poster = cache[CACHED_BACK];
+		
+		if (poster != null) {
+			
+			poster.draw(pane.x + (512f + 47f) * displayScale, pane.y + 90f * displayScale, 418f * displayScale, 650f * displayScale);
+		}
 		
 		g.setColor(Color.white);
 		g.setFont(Fonts.roboto.s36);
 		
-		String s = fieldName+" Selection";
-		g.drawString(s, x + (((pane.x + pane.width) - x) - g.getFont().getWidth(s)) * 0.5f,
+		String s = "Poster Selection";
+		g.drawString(s, pane.x + 512f * displayScale + (512f * displayScale - g.getFont().getWidth(s)) * 0.5f,
 												pane.y + (90f * displayScale - g.getFont().getHeight(s)) * 0.5f);
 		
 		this.list.render(g, pX, pY);
@@ -299,6 +247,7 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 			
 			String str = "null";
 			if (cache[i] != null) { str = cache[i].getName(); }
+			if (structs[i] == null) { str += "[struct null"+((i == cacheLoadInd.get())?"?":"")+"]"; }
 			
 			g.drawString(str, 10, 10 + i * g.getFont().getHeight("I"));
 			
@@ -319,12 +268,6 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 		
 	}
 	
-	public void onWallpaperChange() {
-		
-		
-		
-	}
-	
 	public void indexChanged(int ind) {
 		
 		int change = ind - selected.get();
@@ -334,11 +277,9 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 		
 		if (Math.abs(change) > 1) {
 			
-			for (int i = 0; i < cache.length; i++) { destroy(cache[i]); cache[i] = null; structs[i] = null; }
+			for (int i = 0; i < cache.length; i++) { destroy(cache[i]); cache[i] = null; }
 			
 		} else {
-			
-			//loadThread.interrupt();
 			
 			if (change < 0) {
 				
@@ -347,11 +288,9 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 				for (int i = cache.length-1; i > 0; i--) {
 					
 					cache[i] = cache[i-1];
-					structs[i] = structs[i-1];
 				}
 				
 				cache[0] = null;
-				structs[0] = null;
 				
 			} else {
 				
@@ -360,35 +299,18 @@ public static final int CACHED_BACK = 1, CACHED_FRONT = 1;
 				for (int i = 0; i < cache.length-1; i++) {
 					
 					cache[i] = cache[i+1];
-					structs[i] = structs[i+1];
 				}
 				
 				cache[cache.length-1] = null;
-				structs[cache.length-1] = null;
 				
 			}
 			
-			//loadThread.start();
-			
 		}
-		
-		/*
-		if (cache[CACHED_BACK] == null) {
-			
-			try {
-				
-				this.cache[CACHED_BACK] = new Image(imageFiles.get(selected).getAbsolutePath());
-				this.cache[CACHED_BACK].setFilter(Image.FILTER_LINEAR);
-				this.cache[CACHED_BACK].setName(imageFiles.get(selected).getName());
-				
-			} catch (Exception e) { }
-			
-		}*/
 		
 	}
 	
 	private void destroy(Image img) {
-		if (img != null && img.getName().equalsIgnoreCase(wallpName)) { return; }
+		if (img != null && img.getName().equalsIgnoreCase(info.poster)) { return; }
 		
 		try { img.destroy(); } catch (Exception | Error e) {}
 		

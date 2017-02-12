@@ -32,16 +32,16 @@
 	</menu>
 	<general>
 		<bootInto>0</bootInto>
-		<mangaDir>manga</mangaDir>
-		<metaIn>H:/Mangas/</metaIn>
+		<mangaDir>H:/Mangas</mangaDir>
+		<metaIn>D:/Dropbox/Data/Manga-Metadata</metaIn>
 		<mangadlPath></mangadlPath>
 		<mangaAutoUpdate>true</mangaAutoUpdate>
 		<updateEveryHours>24</updateEveryHours>
-		<lastUpdated>1483295816988</lastUpdated>
+		<lastUpdated>1485569176145</lastUpdated>
 	</general>
 	<MAL>
-		<userName></userName>
-		<password>PpyChmfiGnk=</password>
-		<sync>false</sync>
+		<userName>Deconimus</userName>
+		<password>YVcyBZoE4P/GmtpbdEbUMw==</password>
+		<sync>true</sync>
 	</MAL>
 </root>

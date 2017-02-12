@@ -2,14 +2,10 @@ package main;
 
 import static main.Main.displayScale;
 import static main.Mangas.POSTER_HEIGHT;
-import static main.Mangas.POSTER_WIDTH;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
@@ -19,8 +15,17 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import components.ChapterSourceSelect;
+import components.Component;
+import components.ContextMenu;
+import components.MangaInfoPanel;
+import components.MangaList;
+import components.MangaPosterRow;
+import components.MangaTable;
+import components.MenuList;
+import components.PosterPanel;
+import components.PosterSelect;
 import mangaLib.MangaInfo;
-import visionCore.geom.Color;
 import visionCore.geom.Vector2f;
 import visionCore.math.FastMath;
 import visionCore.util.Files;
@@ -99,7 +104,6 @@ public class MangaView extends Menu {
 					
 					mangaOnAction(entry, posters);
 				}
-				
 			};
 			
 			list.setFocus(lastTitleInd);
@@ -240,8 +244,17 @@ public class MangaView extends Menu {
 				
 			} else if (key == Input.KEY_SPACE) {
 				
-				clearScene();
-				Main.currentScene = ImageView.openLastRead(info.title);
+				if (info.lastPage > -1 && info.lastChapter > -1) {
+				
+					clearScene();
+					Main.currentScene = ImageView.openLastRead(info.title);
+					if (Main.currentScene == null) { Main.currentScene = new ChapterView(info.title); }
+					
+				} else {
+					
+					clearScene(info.title);
+					Main.currentScene = new ChapterView(info.title);
+				}
 				
 			} else if (key == Input.KEY_F3) {
 				
@@ -256,7 +269,6 @@ public class MangaView extends Menu {
 				list.sortEntries(sortMode);
 				
 				list.setFocus(ft);
-				
 			}
 			
 		}
@@ -336,6 +348,7 @@ public class MangaView extends Menu {
 		
 		items.add("Show Manga Info");
 		items.add("Update Manga");
+		items.add("Chapter Source");
 		items.add("Select Poster");
 		
 		MangaView tis = this;
@@ -345,7 +358,7 @@ public class MangaView extends Menu {
 			@Override
 			public void onAction(int selected) {
 				
-				if (items.size() == 5 && selected >= 2) { selected++; }
+				if (items.size() == 6 && selected >= 2) { selected++; }
 				
 				if (selected == 0) {
 					
@@ -382,10 +395,12 @@ public class MangaView extends Menu {
 					try { info.save(new File(Settings.mangaDir+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
 					try { info.save(new File(Settings.metaIn+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
 					
+					/*
 					if (Settings.MAL_sync && MAL.canAuthenticate()) {
 						
 						new Thread(){@Override public void run(){ MAL.updateInList(info); }}.start();
 					}
+					*/
 					
 					closed = true;
 					
@@ -397,10 +412,12 @@ public class MangaView extends Menu {
 					try { info.save(new File(Settings.mangaDir+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
 					try { info.save(new File(Settings.metaIn+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
 					
+					/*
 					if (Settings.MAL_sync && MAL.canAuthenticate()) {
 						
 						new Thread(){@Override public void run(){ MAL.updateInList(info); }}.start();
 					}
+					*/
 					
 				} else if (selected == 3) {
 					
@@ -421,6 +438,10 @@ public class MangaView extends Menu {
 					closed = true;
 					
 				} else if (selected == 5) {
+					
+					focus = new ChapterSourceSelect(info, tis);
+					
+				} else if (selected == 6) {
 					
 					focus = new PosterSelect(info){
 						
@@ -444,132 +465,18 @@ public class MangaView extends Menu {
 	
 	private void openMangaInfoPanel(MangaInfo info) {
 		
-		MangaView tis = this;
-		
-		cm = new MangaInfoPanel(info, new File(Settings.metaIn+"/"+info.title+"/_metadata"), new String[]{ "Update", "Refresh", "Poster", "Remove" }){
-			
-			@Override
-			public void onButton(String button) {
-				button = button.toLowerCase().trim();
-				
-				if (button.startsWith("update")) {
-					
-					if (Main.mangadl.get() == null) {
-						
-						Main.mangadl.set(MangaDL.updateManga(info.title));
-						
-					} else {
-						
-						MangaDL.addToQueue("Updating "+info.title, new String[]{ "-d", "\""+info.title+"\"", "--noinput" });
-					}
-					
-				} else if (button.startsWith("refresh")) {
-					
-					if (Main.mangadl.get() == null) {
-						
-						Main.mangadl.set(MangaDL.refreshManga(info.title));
-						
-					} else {
-						
-						MangaDL.addToQueue("Refreshing "+info.title, new String[]{ "-r", "\""+info.title+"\"" });
-					}
-					
-				} else if (button.contains("poster")) {
-					
-					this.cm = new PosterSelect(info){
-						
-						@Override
-						public void onPosterChanged() {
-							
-							tis.list.checkForPosterChange();
-							Mangas.posterChange();
-						}
-						
-					};
-					
-				} else if (button.contains("remove")) {
-					
-					this.cm = new Dialogbox("Removing Manga", "Are you sure you want to remove \""+info.title+"\" from your library?", new String[]{ "Yes", "No" }){
-						
-						@Override
-						public void onButton(String button) {
-							button = button.toLowerCase();
-							
-							if (button.equals("yes")) {
-								
-								if (Settings.mangaDir.length() < 2 || info.title.length() < 2) { return; }
-								
-								File dir = new File(Settings.mangaDir+"/"+info.title);
-								
-								if (dir.exists() && dir.isDirectory()) {
-									
-									Files.cleanseDir(dir);
-									dir.delete();
-								}
-								
-								if (Settings.metaIn.length() < 2) { return; }
-								
-								File mdir = new File(Settings.metaIn+"/"+info.title);
-								
-								if (mdir.exists() && mdir.isDirectory()) {
-									
-									Files.cleanseDir(mdir);
-									mdir.delete();
-								}
-								
-								HashMap<String, MangaInfo> mangas = Mangas.mangas.get();
-								mangas.remove(info.title);
-								Mangas.mangas.set(mangas);
-								
-								for (Iterator<MangaInfo> it = list.entries.iterator(); it.hasNext();) {
-									MangaInfo nfo = it.next();
-									
-									if (nfo.title.equalsIgnoreCase(info.title)) { it.remove(); }
-								}
-								
-								list.selected = FastMath.clampToRangeC(list.selected, 0, list.entries.size()-1);
-								
-								if (Settings.MAL_sync && MAL.canAuthenticate()) {
-									
-									new Thread(){
-										
-										@Override
-										public void run() {
-											
-											MAL.putOnHold(info);
-										}
-										
-									}.start();
-									
-								}
-								
-								cm.closed = true;
-								
-							}
-							
-							closed = true;
-						}
-						
-					};
-					
-				}
-				
-			}
-			
-		};
+		cm = MangaInfoPanel.getMangaViewPanel(this, info, new File(Settings.metaIn+"/"+info.title+"/_metadata"));
 		components.add(cm);
-		
 	}
 	
 	@Override
 	public void clearScene() {
 		super.clearScene();
 		
-		
-		
 	}
 	
 	public void clearScene(String ignoreTitle) {
+		//not calling super.clearScene() as it would clear all components
 		
 		for (Component c : components) {
 			
@@ -577,11 +484,7 @@ public class MangaView extends Menu {
 				
 				((MangaList)c).clear(ignoreTitle);
 				
-			} else {
-				
-				c.clear();
-			}
-			
+			} else { c.clear(); }
 		}
 		
 	}

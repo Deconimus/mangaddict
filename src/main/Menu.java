@@ -10,6 +10,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import components.Component;
+import components.UpdatingPanel;
 import visionCore.geom.Color;
 
 import static main.Main.displayScale;
@@ -196,7 +198,7 @@ public class Menu extends Scene {
 		
 	}
 	
-	protected void setFocus(Component focus) {
+	public void setFocus(Component focus) {
 		if (focus == null) { return; }
 		
 		if (this.focus != null) { this.focus.hasFocus = false; }

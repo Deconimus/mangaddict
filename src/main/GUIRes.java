@@ -128,39 +128,43 @@ public class GUIRes {
 	}
 	
 	public static void drawContextPane(Graphics g, Rectangle pane) {
+		
+		drawContextPane(g, pane, 0f, 0f);
+	}
+	
+	public static void drawContextPane(Graphics g, Rectangle pane, float offX, float offY) {
 		if (contextPanel == null) { return; }
 		
 		contextPanel.startUse();
 		
 		contextPanel.getSubImage(0, 0, 32, 32)
-		   .drawEmbedded(pane.x - 16f * displayScale, pane.y - 16f * displayScale, 32f * displayScale, 32f * displayScale);
+		   .drawEmbedded(offX + pane.x - 16f * displayScale, offY + pane.y - 16f * displayScale, 32f * displayScale, 32f * displayScale);
 		
 		contextPanel.getSubImage(32, 0, 416-64, 32)
-		   .drawEmbedded(pane.x + (-16f + 32f) * displayScale, pane.y - 16f * displayScale, pane.width - 32f * displayScale, 32f * displayScale);
+		   .drawEmbedded(offX + pane.x + (-16f + 32f) * displayScale, offY + pane.y - 16f * displayScale, pane.width - 32f * displayScale, 32f * displayScale);
 		
 		contextPanel.getSubImage(416-32, 0, 32, 32)
-		   .drawEmbedded(pane.x + pane.width - 16f * displayScale, pane.y - 16f * displayScale, 32f * displayScale, 32f * displayScale);
+		   .drawEmbedded(offX + pane.x + pane.width - 16f * displayScale, offY + pane.y - 16f * displayScale, 32f * displayScale, 32f * displayScale);
 		
 		contextPanel.getSubImage(0, 32, 32, 160-64)
-			.drawEmbedded(pane.x - 16f * displayScale, pane.y + 16f * displayScale, 32f * displayScale, pane.height - 32f * displayScale);
+			.drawEmbedded(offX + pane.x - 16f * displayScale, offY + pane.y + 16f * displayScale, 32f * displayScale, pane.height - 32f * displayScale);
 		
 		contextPanel.getSubImage(32, 32, 416-64, 160-64)
-			.drawEmbedded(pane.x + 16f * displayScale, pane.y + 16f * displayScale, pane.width - 32f * displayScale, pane.height - 32f * displayScale);
+			.drawEmbedded(offX + pane.x + 16f * displayScale, offY + pane.y + 16f * displayScale, pane.width - 32f * displayScale, pane.height - 32f * displayScale);
 		
 		contextPanel.getSubImage(416-32, 32, 32, 160-64)
-			.drawEmbedded(pane.x + pane.width - 16f * displayScale, pane.y + 16f * displayScale, 32f * displayScale, pane.height - 32f * displayScale);
+			.drawEmbedded(offX + pane.x + pane.width - 16f * displayScale, offY + pane.y + 16f * displayScale, 32f * displayScale, pane.height - 32f * displayScale);
 		
 		contextPanel.getSubImage(0, 160-32, 32, 32)
-		   .drawEmbedded(pane.x - 16f * displayScale, pane.y + pane.height - 16f * displayScale, 32f * displayScale, 32f * displayScale);
+		   .drawEmbedded(offX + pane.x - 16f * displayScale, offY + pane.y + pane.height - 16f * displayScale, 32f * displayScale, 32f * displayScale);
 		
 		contextPanel.getSubImage(32, 160-32, 416-64, 32)
-		   .drawEmbedded(pane.x + (-16f + 32f) * displayScale, pane.y + pane.height - 16f * displayScale, pane.width - 32f * displayScale, 32f * displayScale);
+		   .drawEmbedded(offX + pane.x + (-16f + 32f) * displayScale, offY + pane.y + pane.height - 16f * displayScale, pane.width - 32f * displayScale, 32f * displayScale);
 		
 		contextPanel.getSubImage(416-32, 160-32, 32, 32)
-		   .drawEmbedded(pane.x + pane.width - 16f * displayScale, pane.y + pane.height - 16f * displayScale, 32f * displayScale, 32f * displayScale);
+		   .drawEmbedded(offX + pane.x + pane.width - 16f * displayScale, offY + pane.y + pane.height - 16f * displayScale, 32f * displayScale, 32f * displayScale);
 		
 		contextPanel.endUse();
-		
 	}
 	
 	public static void drawRadioButton(float x, float y, boolean enabled) {

@@ -1,4 +1,4 @@
-package main;
+package components;
 
 import static main.Main.displayScale;
 import static main.Mangas.POSTER_HEIGHT;
@@ -12,6 +12,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
+import main.Fonts;
+import main.GUIRes;
+import main.MangaView;
+import main.Mangas;
+import main.Menu;
+import main.Settings;
+import main.Shaders;
 import mangaLib.MangaInfo;
 import visionCore.geom.Color;
 import visionCore.geom.Vector2f;

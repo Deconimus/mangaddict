@@ -1,4 +1,4 @@
-package main;
+package components;
 
 import static main.Main.displayScale;
 
@@ -27,6 +27,9 @@ import org.newdawn.slick.opengl.ImageDataFactory;
 import org.newdawn.slick.opengl.InternalTextureLoader;
 import org.newdawn.slick.opengl.LoadableImageData;
 
+import main.GUIRes;
+import main.Mangas;
+import main.Settings;
 import mangaLib.MangaInfo;
 import visionCore.dataStructures.tuples.Triplet;
 import visionCore.dataStructures.tuples.Tuple;
@@ -174,14 +177,17 @@ public class MangaList extends MenuList<MangaInfo> {
 		HashSet<String> ignores = new HashSet<String>();
 		for (MangaInfo info : entries) { ignores.add(info.title.trim().toLowerCase()); }
 		
-		if (loadMetaFromDir) {
+		if (loadMetaFromDir && metadir != null) {
 			
 			infosThread = new InfoLoadThread(metadir, dirFilter, ignores);
 			infosThread.start();
 		}
 		
-		imgThread = new ImageLoadThread(metadir);
-		imgThread.start();
+		if (metadir != null) {
+		
+			imgThread = new ImageLoadThread(metadir);
+			imgThread.start();
+		}
 		
 	}
 	

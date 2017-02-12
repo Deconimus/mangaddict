@@ -919,7 +919,7 @@ public class ImageView extends Scene {
 			
 			if (key == Input.KEY_LEFT) {
 				
-				if (ctrlHold || imgWidth >= Display.getWidth()) {
+				if (ctrlHold || (imgWidth > Display.getWidth() && camZ > 1.0)) {
 					
 					leftHold = 0;
 					
@@ -933,7 +933,7 @@ public class ImageView extends Scene {
 				
 			} else if (key == Input.KEY_RIGHT) {
 				
-				if (ctrlHold || imgWidth >= Display.getWidth()) {
+				if (ctrlHold || (imgWidth > Display.getWidth() && camZ > 1.0)) {
 					
 					rightHold = 0;
 					

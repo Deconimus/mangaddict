@@ -9,7 +9,7 @@ path = os.path.dirname(os.path.abspath(__file__)).replace("\\", "/")
 def main():
 	
 	if not os.path.exists(path+"/build.json"):
-		print("\""+path+"build.json\" not found.")
+		print("\""+path+"/build.json\" not found.")
 		return
 		
 	data = None
@@ -18,32 +18,33 @@ def main():
 		data = json.load(f)
 	
 	if data is None or len(data) <= 0:
-		print("build.json is corrupted.")
+		print("\""+path+"/build.json\" is corrupted.")
 		return
 		
 	builderDir = None
 	
 	if "jarBuilder" in data and "path" in data["jarBuilder"]:
 		
-		builderDir = os.path.abspath(data["builder"]["path"]).replace("\\", "/")
+		builderDir = os.path.abspath(data["jarBuilder"]["path"]).replace("\\", "/")
 	else:
 		builderDir = "jarBuilder"
 	
-	buildScriptFile = builderDir+"/jarBuilder.py"
+	buildScriptFile = builderDir+"/compositor.py"
 	
 	if not os.path.exists(buildScriptFile):
 		print("\""+buildScriptFile+"\" not found.")
 		return
 		
-	jarCreatorFile = builderDir+"/jarCreator.py"
+	jarBuilderFile = builderDir+"/jarBuilder.py"
 	
 	if not os.path.exists(buildScriptFile):
-		print("\""+jarCreatorFile+"\" not found.")
+		print("\""+jarBuilderFile+"\" not found.")
 		return
 		
-	buildScript = loadModule("jarBuilder", buildScriptFile)
+	buildScript = loadModule("compositor", buildScriptFile)
+	buildScript.build(path, data, loadModule("jarBuilder", jarBuilderFile))
 	
-	buildScript.build(path, data, loadModule("jarCreator", jarCreatorFile))
+	buildScript.cleanup()
 	
 	
 def loadModule(moduleName, moduleFile):
