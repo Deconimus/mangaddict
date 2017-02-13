@@ -15,14 +15,23 @@ import org.newdawn.slick.geom.Rectangle;
 import visionCore.geom.Color;
 
 public class GUIRes {
-
+	
+	
 	public static final int THREADS_NUM = Math.max(Runtime.getRuntime().availableProcessors(), 1);
 	
 	public static Image menubg, downloadbg, settingsbg;
 	
 	public static Image contentPanel, posterPanel, posterGlow, splitter, selected, glass, scrollbar, arrows,
 						updatePanel, tick, contextPanel, loading, reading, posterSelect, posterFrame,
-						menuSectionPanel, searchPanel, buttonSelected, radioButton, blankAvatar;
+						menuSectionPanel, searchPanel, buttonSelected, radioButton, blankAvatar, loadingBanner;
+	
+	
+	public static void loadEssentials() throws SlickException {
+		
+		menubg = new Image(Main.abspath+"/res/wallpaper/"+Settings.menu_background);
+		loading = new Image(Main.abspath+"/res/textures/loading.png");
+		loadingBanner = new Image(Main.abspath+"/res/textures/loadingbanner.png");
+	}
 	
 	public static void load() throws SlickException {
 		
@@ -30,33 +39,31 @@ public class GUIRes {
 		
 		String path = Main.abspath+"/res/textures";
 		
-		int imgs = 23;
+		int imgs = 21;
 		
 		String[] refs = new String[imgs];
 		
-		refs[0] = Main.abspath+"/res/wallpaper/"+Settings.menu_background;
-		refs[1] = Main.abspath+"/res/wallpaper/"+Settings.menu_download_background;
-		refs[2] = Main.abspath+"/res/wallpaper/"+Settings.menu_settings_background;
-		refs[3] = path+"/contentPanel.png";
-		refs[4] = path+"/updatePanel.png";
-		refs[5] = path+"/posterPanel.png";
-		refs[6] = path+"/posterGlow.png";
-		refs[7] = path+"/splitter.png";
-		refs[8] = path+"/selected.png";
-		refs[9] = path+"/glass.png";
-		refs[10] = path+"/scrollbar.png";
-		refs[11] = path+"/arrows.png";
-		refs[12] = path+"/tick.png";
-		refs[13] = path+"/context.png";
-		refs[14] = path+"/loading.png";
-		refs[15] = path+"/reading.png";
-		refs[16] = path+"/posterSelect.png";
-		refs[17] = path+"/menuSectionPanel.png";
-		refs[18] = path+"/searchpanel.png";
-		refs[19] = path+"/buttonSelected.png";
-		refs[20] = path+"/posterFrame.png";
-		refs[21] = path+"/radioButton.png";
-		refs[22] = path+"/avatar-blank.png";
+		refs[0] = Main.abspath+"/res/wallpaper/"+Settings.menu_download_background;
+		refs[1] = Main.abspath+"/res/wallpaper/"+Settings.menu_settings_background;
+		refs[2] = path+"/contentPanel.png";
+		refs[3] = path+"/updatePanel.png";
+		refs[4] = path+"/posterPanel.png";
+		refs[5] = path+"/posterGlow.png";
+		refs[6] = path+"/splitter.png";
+		refs[7] = path+"/selected.png";
+		refs[8] = path+"/glass.png";
+		refs[9] = path+"/scrollbar.png";
+		refs[10] = path+"/arrows.png";
+		refs[11] = path+"/tick.png";
+		refs[12] = path+"/context.png";
+		refs[13] = path+"/reading.png";
+		refs[14] = path+"/posterSelect.png";
+		refs[15] = path+"/menuSectionPanel.png";
+		refs[16] = path+"/searchpanel.png";
+		refs[17] = path+"/buttonSelected.png";
+		refs[18] = path+"/posterFrame.png";
+		refs[19] = path+"/radioButton.png";
+		refs[20] = path+"/avatar-blank.png";
 		
 		ImageStruct[] structs = new ImageStruct[imgs];
 		
@@ -78,7 +85,6 @@ public class GUIRes {
 							structs[index] = new ImageStruct(refs[index], Image.FILTER_LINEAR);
 							
 						} catch (Exception e) { e.printStackTrace(); }
-						
 					}
 					
 				});
@@ -98,30 +104,28 @@ public class GUIRes {
 		} catch (Exception | Error e) { e.printStackTrace(); }
 		
 		
-		menubg = new Image(structs[0]);
-		downloadbg = new Image(structs[1]);
-		settingsbg = new Image(structs[2]);
+		downloadbg = new Image(structs[0]);
+		settingsbg = new Image(structs[1]);
 		
-		contentPanel = new Image(structs[3]);
-		updatePanel = new Image(structs[4]);
-		posterPanel = new Image(structs[5]);
-		posterGlow = new Image(structs[6]);
-		splitter = new Image(structs[7]);
-		selected = new Image(structs[8]);
-		glass = new Image(structs[9]);
-		scrollbar = new Image(structs[10]);
-		arrows = new Image(structs[11]);
-		tick = new Image(structs[12]);
-		contextPanel = new Image(structs[13]);
-		loading = new Image(structs[14]);
-		reading = new Image(structs[15]);
-		posterSelect = new Image(structs[16]);
-		menuSectionPanel = new Image(structs[17]);
-		searchPanel = new Image(structs[18]);
-		buttonSelected = new Image(structs[19]);
-		posterFrame = new Image(structs[20]);
-		radioButton = new Image(structs[21]);
-		blankAvatar = new Image(structs[22]);
+		contentPanel = new Image(structs[2]);
+		updatePanel = new Image(structs[3]);
+		posterPanel = new Image(structs[4]);
+		posterGlow = new Image(structs[5]);
+		splitter = new Image(structs[6]);
+		selected = new Image(structs[7]);
+		glass = new Image(structs[8]);
+		scrollbar = new Image(structs[9]);
+		arrows = new Image(structs[10]);
+		tick = new Image(structs[11]);
+		contextPanel = new Image(structs[12]);
+		reading = new Image(structs[13]);
+		posterSelect = new Image(structs[14]);
+		menuSectionPanel = new Image(structs[15]);
+		searchPanel = new Image(structs[16]);
+		buttonSelected = new Image(structs[17]);
+		posterFrame = new Image(structs[18]);
+		radioButton = new Image(structs[19]);
+		blankAvatar = new Image(structs[20]);
 		
 		System.out.println(" done.");
 		

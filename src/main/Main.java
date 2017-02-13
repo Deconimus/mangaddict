@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.lwjgl.input.Controller;
@@ -133,7 +134,7 @@ public class Main extends BasicGame {
 		display.setDisplayMode((int)video_resolution.x, (int)video_resolution.y, video_fullscreen);
 		
 		display.setShowFPS(Settings.video_showFPS);
-		display.setTargetFrameRate(60);
+		display.setTargetFrameRate(fps);
 		display.setAlwaysRender(false);
 		display.setVSync(false);
 		
@@ -190,7 +191,7 @@ public class Main extends BasicGame {
 		
 		mangadl = new AtomicReference<MangaDL>();
 		
-		GUIRes.load();
+		GUIRes.loadEssentials();
 		
 		currentScene = new LoadingScene();
 		
