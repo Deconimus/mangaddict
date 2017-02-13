@@ -419,6 +419,8 @@ public class MangaView extends Menu {
 					}
 					*/
 					
+					closed = true;
+					
 				} else if (selected == 3) {
 					
 					openMangaInfoPanel(info);

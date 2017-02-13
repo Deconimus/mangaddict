@@ -238,7 +238,7 @@ public class ChapterSourceSelectResults extends Component {
 						Files.deleteDir(f);
 					}
 					
-					MangaDL.downloadManga(info.title);
+					MangaDL.downloadManga(info.title, Settings.automaticChapterSubstitution);
 					
 				}
 				

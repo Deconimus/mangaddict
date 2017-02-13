@@ -188,9 +188,14 @@ public class MangaDL {
 	
 	public static MangaDL downloadManga(String title) {
 		
-		MangaDL.addToQueue("Downloading "+title, new String[]{ "-d", "\""+title+"\"", "--noinput" });
+		return downloadManga(title, Settings.automaticChapterSubstitution);
+	}
+	
+	public static MangaDL downloadManga(String title, boolean chsubs) {
 		
-		return new MangaDL("Downloading "+title, new String[]{ "-d", title, "--noinput" });
+		MangaDL.addToQueue("Downloading "+title, new String[]{ "-d", "\""+title+"\"", "--noinput", chsubs ? "" : "--nochsubs"  });
+		
+		return new MangaDL("Downloading "+title, new String[]{ "-d", title, "--noinput", chsubs ? "" : "--nochsubs" });
 	}
 	
 	public static MangaDL refreshMangas() {

@@ -36,6 +36,7 @@
 		<metaIn>D:/Dropbox/Data/Manga-Metadata</metaIn>
 		<mangadlPath></mangadlPath>
 		<mangaAutoUpdate>true</mangaAutoUpdate>
+		<automaticChapterSubstitution>true</automaticChapterSubstitution>
 		<updateEveryHours>24</updateEveryHours>
 		<lastUpdated>1485569176145</lastUpdated>
 	</general>

@@ -412,18 +412,21 @@ public class MangaInfoPanel extends Component {
 			
 			@Override
 			public void onButton(String button) {
-			
-				if (entry.equals("cancel")) {
+				
+				button = button.toLowerCase().trim();
+				
+				if (button.equals("cancel")) {
 					
 					this.onClosing();
 					this.closed = true;
 					
-				} else if (entry.equals("download") && Mangas.get(info.title) == null) {
+				} else if (button.equals("download") && Mangas.get(info.title) == null) {
 					
 					if (Main.mangadl.get() == null || Main.mangadl.get().finished.get()) {
 						
-						Main.mangadl.set(MangaDL.downloadManga(info.title));
+						Main.mangadl.set(MangaDL.downloadManga(info.title, Settings.automaticChapterSubstitution));
 						
+						/*
 						if (Settings.MAL_sync && MAL.canAuthenticate()) {
 						
 							new Thread(){
@@ -435,20 +438,22 @@ public class MangaInfoPanel extends Component {
 								}
 								
 							}.start();
-							
 						}
+						*/
 						
 					} else {
 						
-						MangaDL.addToQueue("Downloading "+info.title, new String[]{ "-d", "\""+info.title+"\"", "--noinput" });
+						boolean chsubs = Settings.automaticChapterSubstitution;
 						
+						MangaDL.addToQueue("Downloading "+info.title, new String[]{ "-d", "\""+info.title+"\"", "--noinput", (chsubs) ? "" : "--nochsubs" });
 					}
 					
-					this.onClosing();
-					this.closed = true;
+					onClosing();
+					closed = true;
 					
-				} else if (entry.equals("plan to read")) {
+				} else if (button.equals("plan to read")) {
 					
+					/*
 					if (Settings.MAL_sync && MAL.canAuthenticate()) {
 					
 						new Thread(){
@@ -460,12 +465,11 @@ public class MangaInfoPanel extends Component {
 							}
 							
 						}.start();
-						
 					}
+					*/
 					
-					this.onClosing();
-					this.closed = true;
-					
+					onClosing();
+					closed = true;
 				}
 			}
 			

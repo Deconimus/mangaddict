@@ -70,7 +70,7 @@ public class Settings {
 	
 	public static int bootInto;
 	public static String mangaDir, metaIn, mangadlPath;
-	public static boolean mangaAutoUpdate;
+	public static boolean mangaAutoUpdate, automaticChapterSubstitution;
 	public static int updateEveryHours;
 	public static long lastUpdated;
 	
@@ -100,6 +100,7 @@ public class Settings {
 		metaIn = mangaDir+"";
 		mangadlPath = "";
 		mangaAutoUpdate = true;
+		automaticChapterSubstitution = true;
 		bootInto = BOOT_LAST_READ;
 		updateEveryHours = 24;
 		lastUpdated = 0;
