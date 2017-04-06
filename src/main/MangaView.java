@@ -6,6 +6,7 @@ import static main.Mangas.POSTER_HEIGHT;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
@@ -34,7 +35,9 @@ public class MangaView extends Menu {
 
 	public static final int MODE_POSTER_ROW = 0, MODE_LIST = 1, MODE_TABLE = 2;
 	
+	
 	public int mode, sortMode;
+	public boolean showHidden;
 	
 	public List<MangaInfo> infos;
 	
@@ -44,6 +47,7 @@ public class MangaView extends Menu {
 	public Component cm;
 	
 	public PosterPanel posterP;
+	
 	
 	public MangaView(int mode) {
 		
@@ -62,8 +66,14 @@ public class MangaView extends Menu {
 		
 		HashMap<String, MangaInfo> mangas = Mangas.mangas.get();
 		
-		infos = new ArrayList<MangaInfo>(mangas.size());
-		for (MangaInfo info : mangas.values()) { infos.add(info); }
+		this.showHidden = false;
+		
+		this.infos = new ArrayList<MangaInfo>(mangas.size());
+		
+		for (MangaInfo info : mangas.values()) {
+			
+			if (!info.hidden) { infos.add(info); }
+		}
 		
 		MangaList.sortInfos(infos, sortMode);
 		
@@ -86,6 +96,12 @@ public class MangaView extends Menu {
 		
 		lastTitleInd = FastMath.clampToRangeC(lastTitleInd, 0, infos.size());
 		
+		initMangaList(infos, lastTitleInd);
+		
+	}
+	
+	public void initMangaList(List<MangaInfo> infos, int index) {
+		
 		if (mode == MODE_POSTER_ROW) {
 			
 			MangaView tis = this;
@@ -97,7 +113,7 @@ public class MangaView extends Menu {
 			Rectangle listpane = new Rectangle(200f * dsh, Display.getHeight() - POSTER_HEIGHT * 0.75f * displayScale - 100f * displayScale,
 												Display.getWidth() - 200f * 2f * dsh, POSTER_HEIGHT * 0.75f * displayScale);
 			
-			list = new MangaPosterRow(infos, new File(Settings.metaIn), null, listpane, false, lastTitleInd) {
+			list = new MangaPosterRow(infos, new File(Settings.metaIn), null, listpane, false, index) {
 				
 				@Override
 				public void onAction(MangaInfo entry) {
@@ -106,7 +122,7 @@ public class MangaView extends Menu {
 				}
 			};
 			
-			list.setFocus(lastTitleInd);
+			list.setFocus(index);
 			
 			
 		} else if (mode == MODE_LIST) {
@@ -121,7 +137,7 @@ public class MangaView extends Menu {
 			
 			Rectangle listpanel = new Rectangle(contentpanel.x + 30f, contentpanel.y + 20f, contentpanel.width - 60f, contentpanel.height - 40f);
 			
-			list = new MangaList(infos, new File(Settings.metaIn), null, listpanel, false, lastTitleInd){
+			list = new MangaList(infos, new File(Settings.metaIn), null, listpanel, false, index){
 				
 				@Override
 				public void update(int delta) throws SlickException {
@@ -158,9 +174,9 @@ public class MangaView extends Menu {
 				
 			};
 			list.drawPanels = true;
-			list.setFocus(lastTitleInd);
+			list.setFocus(index);
 			
-			posterP = new PosterPanel(infos.get(lastTitleInd), posterpanel, list.posters.get(lastTitle));
+			posterP = new PosterPanel(infos.get(index), posterpanel, list.posters.get(index));
 			this.components.add(posterP);
 			
 			
@@ -177,7 +193,7 @@ public class MangaView extends Menu {
 			Rectangle listpanel = new Rectangle(x, contentpanel.y + 20f * displayScale,
 												w, contentpanel.height - 40f * displayScale);
 			
-			list = new MangaTable(infos, new File(Settings.metaIn), null, listpanel, false, true, lastTitleInd) {
+			list = new MangaTable(infos, new File(Settings.metaIn), null, listpanel, false, true, index) {
 				
 				@Override
 				public void onAction(MangaInfo entry) {
@@ -187,14 +203,14 @@ public class MangaView extends Menu {
 				
 			};
 			list.drawPanels = true;
-			list.setFocus(lastTitleInd);
+			list.setFocus(index);
 			
 		}
 		
 		this.components.add(list);
 		setFocus(list);
-		
 	}
+	
 	
 	@Override
 	public void render(Graphics g) throws SlickException {
@@ -269,6 +285,48 @@ public class MangaView extends Menu {
 				list.sortEntries(sortMode);
 				
 				list.setFocus(ft);
+				
+			} else if (key == Input.KEY_H && (Main.ctrlDown || Main.altDown)) {
+				
+				showHidden = !showHidden;
+				
+				components.remove(list);
+				list.clear();
+				
+				String selectedTitle = list.entries.get(list.selected).title.toLowerCase();
+				int ind = list.selected;
+				
+				if (showHidden) {
+					
+					HashMap<String, MangaInfo> mangas = Mangas.mangas.get();
+					
+					for (MangaInfo m : mangas.values()) {
+						
+						if (m.hidden) { infos.add(m); }
+					}
+					
+				} else {
+					
+					for (Iterator<MangaInfo> it = infos.iterator(); it.hasNext();) {
+						MangaInfo m = it.next();
+						
+						if (m.hidden) { it.remove(); }
+					}
+				}
+				
+				MangaList.sortInfos(infos, sortMode);
+				
+				for (int i = 0; i < infos.size(); i++) {
+					
+					if (infos.get(i).title.toLowerCase().equals(selectedTitle)) {
+						
+						ind = i;
+						break;
+					}
+				}
+				ind = FastMath.clampToRangeC(ind, 0, infos.size()-1);
+				
+				initMangaList(infos, ind);
 			}
 			
 		}
@@ -331,7 +389,6 @@ public class MangaView extends Menu {
 		} else if (mode == MODE_LIST) {
 			
 			centerIn = new Rectangle(contentpanel.x, contentpanel.y + (list.selected - list.camera + 2) * list.entryHeight, contentpanel.width, list.entryHeight);
-			
 		}
 		
 		boolean updating = Main.mangadl.get() != null;
@@ -349,6 +406,7 @@ public class MangaView extends Menu {
 		items.add("Show Manga Info");
 		items.add("Update Manga");
 		items.add("Chapter Source");
+		items.add(((info.hidden) ? "Unh" : "H")+"ide Manga");
 		items.add("Select Poster");
 		
 		MangaView tis = this;
@@ -358,7 +416,7 @@ public class MangaView extends Menu {
 			@Override
 			public void onAction(int selected) {
 				
-				if (items.size() == 6 && selected >= 2) { selected++; }
+				if (items.size() == 7 && selected >= 2) { selected++; }
 				
 				if (selected == 0) {
 					
@@ -444,6 +502,23 @@ public class MangaView extends Menu {
 					focus = new ChapterSourceSelect(info, tis);
 					
 				} else if (selected == 6) {
+					
+					info.hidden = !info.hidden;
+					
+					try { info.save(new File(Settings.mangaDir+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
+					try { info.save(new File(Settings.metaIn+"/"+info.title+"/_metadata/info.xml")); } catch (Exception e) {}
+					
+					if (info.hidden && !showHidden) {
+						
+						try { tis.list.posters.get(tis.list.entries.get(tis.list.selected).title).destroy(); } catch (Exception e) {}
+						tis.list.posters.remove(tis.list.entries.get(tis.list.selected).title);
+						tis.list.entries.remove(tis.list.selected);
+						tis.list.selected = FastMath.clampToRange(tis.list.selected, 0, tis.list.entries.size()-2);
+					}
+					
+					closed = true;
+					
+				} else if (selected == 7) {
 					
 					focus = new PosterSelect(info){
 						

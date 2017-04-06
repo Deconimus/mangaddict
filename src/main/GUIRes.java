@@ -28,9 +28,9 @@ public class GUIRes {
 	
 	public static void loadEssentials() throws SlickException {
 		
-		menubg = new Image(Main.abspath+"/res/wallpaper/"+Settings.menu_background);
-		loading = new Image(Main.abspath+"/res/textures/loading.png");
-		loadingBanner = new Image(Main.abspath+"/res/textures/loadingbanner.png");
+		menubg = new Image(Main.abspath+"/res/wallpaper/"+Settings.menu_background, Image.FILTER_LINEAR);
+		loading = new Image(Main.abspath+"/res/textures/loading.png", Image.FILTER_LINEAR);
+		loadingBanner = new Image(Main.abspath+"/res/textures/loadingbanner.png", Image.FILTER_LINEAR);
 	}
 	
 	public static void load() throws SlickException {

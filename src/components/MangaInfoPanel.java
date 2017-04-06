@@ -422,31 +422,71 @@ public class MangaInfoPanel extends Component {
 					
 				} else if (button.equals("download") && Mangas.get(info.title) == null) {
 					
-					if (Main.mangadl.get() == null || Main.mangadl.get().finished.get()) {
+					Thread t = new Thread(){
+					
+						@Override
+						public void run() {
 						
-						Main.mangadl.set(MangaDL.downloadManga(info.title, Settings.automaticChapterSubstitution));
-						
-						/*
-						if (Settings.MAL_sync && MAL.canAuthenticate()) {
-						
-							new Thread(){
+							File metadir = new File(Settings.metaIn+"/"+info.title+"/_metadata");
+							
+							if (Settings.automaticChapterSubstitution && info.url.contains("mangafox.me") && !info.title.equalsIgnoreCase("onepunch-man")) {
 								
-								@Override
-								public void run() {
+								if (!metadir.exists()) { metadir.mkdirs(); }
+								
+								File nf = new File(metadir.getAbsolutePath().replace('\\', '/')+"/info.xml");
+								
+								if (!nf.exists()) {
 									
-									MAL.updateInList(info);
+									MangaInfo nfo = new MangaInfo();
+									
+									nfo.title = info.title;
+									nfo.url = info.url;
+									
+									List<MangaInfo> rs = (new mangaLib.scrapers.MangaSeeOnline()).searchManga(nfo.title);
+									if (rs.size() == 1) {
+										
+										nfo.chsubs = rs.get(0).url;
+									}
+									
+									nfo.save(nf);
+									
+									try { Thread.sleep(1000); } catch (Exception e) { }
 								}
+							}
+							
+							if (metadir.exists()) {
 								
-							}.start();
+								File dir = new File(Settings.mangaDir+"/"+info.title+"/_metadata");
+								Files.copyDir(metadir, dir);
+							}
+							
+							if (Main.mangadl.get() == null || Main.mangadl.get().finished.get()) {
+								
+								Main.mangadl.set(MangaDL.downloadManga(info.title));
+								
+								/*
+								if (Settings.MAL_sync && MAL.canAuthenticate()) {
+								
+									new Thread(){
+										
+										@Override
+										public void run() {
+											
+											MAL.updateInList(info);
+										}
+										
+									}.start();
+								}
+								*/
+								
+							} else {
+								
+								MangaDL.addToQueue("Downloading "+info.title, new String[]{ "-d", "\""+info.title+"\"", "--noinput" });
+							}
+							
 						}
-						*/
-						
-					} else {
-						
-						boolean chsubs = Settings.automaticChapterSubstitution;
-						
-						MangaDL.addToQueue("Downloading "+info.title, new String[]{ "-d", "\""+info.title+"\"", "--noinput", (chsubs) ? "" : "--nochsubs" });
-					}
+					};
+					t.start();
 					
 					onClosing();
 					closed = true;

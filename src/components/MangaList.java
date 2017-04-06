@@ -400,9 +400,9 @@ public class MangaList extends MenuList<MangaInfo> {
 				if (img != null) {
 					
 					posters.put(key, img);
+					try { poster.destroy(); } catch (Exception e) { e.printStackTrace(); }
 				}
 			}
-			
 		}
 		
 	}

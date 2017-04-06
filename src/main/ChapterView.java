@@ -309,7 +309,7 @@ public class ChapterView extends Menu {
 		
 		items.add("Rename Chapter");
 		
-		cm = new ContextMenu(centerIn, items.toArray(new String[items.size()])){
+		cm = new ContextMenu(centerIn, items.toArray(new String[items.size()])) {
 			
 			@Override
 			public void onAction(int selected) {
@@ -354,7 +354,7 @@ public class ChapterView extends Menu {
 					
 					saveInfo();
 					
-				} else if (selected == 3 && items.size() == 4) {
+				} else if ((selected == 3 && items.size() == 4) || (selected == 4 && items.size() == 5)) {
 					
 					String name = chapterList.entries.get(chapterList.selected).getName();
 					

@@ -317,7 +317,6 @@ public class MenuList<T> extends Component {
 			s = s.substring(2);
 			
 			g.setColor(Color.gray);
-			
 		}
 		
 		while (g.getFont().getWidth(s) > pane.width - 20f * displayScale) { s = s.substring(0, s.length()-4); s += "..."; }

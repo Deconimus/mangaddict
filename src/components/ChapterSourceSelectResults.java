@@ -65,7 +65,7 @@ public class ChapterSourceSelectResults extends Component {
 				
 				try {
 				
-					List<MangaInfo> searchResults = scraper.search(info.title);
+					List<MangaInfo> searchResults = scraper.searchManga(info.title);
 					
 					if (tis.closed) { return; }
 					
@@ -238,7 +238,7 @@ public class ChapterSourceSelectResults extends Component {
 						Files.deleteDir(f);
 					}
 					
-					MangaDL.downloadManga(info.title, Settings.automaticChapterSubstitution);
+					MangaDL.downloadManga(info.title);
 					
 				}
 				
