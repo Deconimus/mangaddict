@@ -20,6 +20,7 @@ import java.util.function.Predicate;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.ImageStruct;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.opengl.ImageData;
@@ -30,6 +31,7 @@ import org.newdawn.slick.opengl.LoadableImageData;
 import main.GUIRes;
 import main.Mangas;
 import main.Settings;
+import main.TJUtil;
 import mangaLib.MangaInfo;
 import visionCore.dataStructures.tuples.Triplet;
 import visionCore.dataStructures.tuples.Tuple;
@@ -137,20 +139,10 @@ public class MangaList extends MenuList<MangaInfo> {
 						File imgF = new File(metadir.getAbsolutePath()+"/"+info.title+"/_metadata/posters/"+info.poster);
 						if (!imgF.exists()) { return; }
 						
-						LoadableImageData imageData = null;
-						ByteBuffer imageBuffer = null;
-						try {
-							
-							FileInputStream fis = new FileInputStream(imgF);
-							BufferedInputStream bufin = new BufferedInputStream(fis);
-							
-							imageData = ImageDataFactory.getImageDataFor(imgF.getAbsolutePath());
-							imageBuffer = imageData.loadImage(bufin, false, null);
-							
-							bufin.close();
-							fis.close();
-							
-						} catch (Exception e) { e.printStackTrace(); }
+						ImageStruct struct = TJUtil.getImageStruct(imgF);
+						
+						ImageData imageData = struct.data;
+						ByteBuffer imageBuffer = struct.data.getImageBufferData();
 						
 						if (imageData != null && imageBuffer != null) {
 							
@@ -168,7 +160,6 @@ public class MangaList extends MenuList<MangaInfo> {
 		} finally {
 			
 			exec.shutdown();
-			
 		}
 		
 		
@@ -377,7 +368,6 @@ public class MangaList extends MenuList<MangaInfo> {
 				return;
 			}
 		}
-		
 	}
 	
 	
@@ -392,7 +382,7 @@ public class MangaList extends MenuList<MangaInfo> {
 				Image img = null;
 				try {
 					
-					img = new Image(Settings.metaIn+"/"+key+"/_metadata/posters/"+info.poster, Image.FILTER_LINEAR);
+					img = new Image(TJUtil.getImageStruct(new File(Settings.metaIn+"/"+key+"/_metadata/posters/"+info.poster)));
 					img.setName(info.poster);
 					
 				} catch (Exception e) { e.printStackTrace(); }
@@ -537,48 +527,26 @@ public class MangaList extends MenuList<MangaInfo> {
 	private class ImageLoadThread extends Thread {
 		
 		
-		private static final int DEFAULT_RATE = 15, RATE_MIN = 500, RATE_DECREASE = 25;
+		private static final int DEFAULT_RATE = 15, RATE_MIN = 200, RATE_DECREASE = 25;
 		
 		
 		private File metadir;
-		//private List<Tuple<String, String>> p2l;
 		
 		private int rate;
 		
 		
-		public ImageLoadThread(File metadir/*, List<Tuple<String, String>> postersToLoad*/) {
+		public ImageLoadThread(File metadir) {
 			
 			this.setDaemon(true);
 			
 			this.metadir = new File(metadir.getAbsolutePath());
-			//this.p2l = postersToLoad;
 			
-			this.rate = DEFAULT_RATE;//(int)(1000f / (float)Main.display.getTargetFrameRate() + 0.5f);
+			this.rate = DEFAULT_RATE;
 		}
 		
 		
 		@Override
 		public void run() {
-			
-			/*
-			while (!interrupted() && !p2l.isEmpty()) {
-				
-				long millis = System.currentTimeMillis();
-				
-				for (int i = 0, size = p2l.size(); i < size; i++) {
-					String title = p2l.get(i).x;
-					String image = p2l.get(i).y;
-					
-					if (loadImageData(title, image)) {
-						
-						p2l.remove(i);
-						break;
-					}
-				}
-				
-				try { sleep(Math.max(rate - (System.currentTimeMillis() - millis), 0)); } catch (InterruptedException e) { return; }
-			}
-			*/
 			
 			for (List<Tuple<String, String>> toload = postersToLoad.get(); !interrupted(); toload = postersToLoad.get()) {
 				

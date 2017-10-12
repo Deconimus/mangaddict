@@ -28,6 +28,7 @@ import visionCore.util.Files;
 
 public class ChapterView extends Menu {
 
+	
 	private AtomicReference<ImageStruct> pstrStruct;
 	
 	public MangaInfo mangaInfo;
@@ -195,7 +196,8 @@ public class ChapterView extends Menu {
 						
 						File posterFile = new File(Settings.metaIn+"/"+mangaInfo.title+"/_metadata/posters/"+mangaInfo.poster);
 						
-						ImageStruct data = new ImageStruct(posterFile, Image.FILTER_LINEAR);
+						//ImageStruct data = new ImageStruct(posterFile, Image.FILTER_LINEAR);
+						ImageStruct data = TJUtil.getImageStruct(posterFile);
 						
 						if (data != null) {
 							

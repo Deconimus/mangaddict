@@ -1,14 +1,11 @@
 package main;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-
-import javax.imageio.ImageIO;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -18,9 +15,9 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.ImageStruct;
 
 import mangaLib.MangaInfo;
-import mangaLib.Poster;
 import visionCore.util.Files;
 
 public class Mangas {
@@ -52,7 +49,6 @@ public class Mangas {
 		loadKnownLockedWidths();
 		
 		System.out.println(" done.");
-		
 	}
 	
 	
@@ -124,7 +120,8 @@ public class Mangas {
 				Image img = null;
 				try {
 					
-					img = new Image(thumb.getAbsolutePath(), Image.FILTER_LINEAR);
+					ImageStruct struct = TJUtil.getImageStruct(thumb);
+					img = new Image(struct);
 					img.setName(thumb.getName().substring(0, thumb.getName().lastIndexOf(".")));
 				} catch (Exception e) {}
 				
@@ -164,7 +161,7 @@ public class Mangas {
 					Image img = null;
 					try {
 						
-						img = new Image(thumbf.getAbsolutePath(), Image.FILTER_LINEAR);
+						img = new Image(TJUtil.getImageStruct(thumbf));
 						img.setName(thumbf.getName());
 					} catch (Exception e) {}
 					

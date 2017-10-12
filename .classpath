@@ -5,13 +5,10 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/Slick"/>
 	<classpathentry kind="lib" path="/Pixelated Vision Prototype/lib/dom4j/dom4j-2.0.0-RC1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MangaLib"/>
-	<classpathentry kind="lib" path="/Pixelated Vision Prototype/lib/lwjgl-2.9.0/jar/jinput.jar"/>
-	<classpathentry kind="lib" path="/Pixelated Vision Prototype/lib/lwjgl-2.9.0/jar/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="/Pixelated Vision Prototype/lib/lwjgl-2.9.0/jar/lwjgl.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Pixelated Vision Prototype/lib/lwjgl-2.9.0/native/windows&amp;linux"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/VisionCore"/>
+	<classpathentry kind="lib" path="/Pixelated Vision Prototype/lib/lwjgl-2.9.3/jar/jinput.jar"/>
+	<classpathentry kind="lib" path="/Pixelated Vision Prototype/lib/lwjgl-2.9.3/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="/Pixelated Vision Prototype/lib/lwjgl-2.9.3/jar/lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/usr/bin/libjpeg-turbo-gcc64/classes/turbojpeg.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

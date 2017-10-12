@@ -30,7 +30,7 @@ public class MenuList<T> extends Component {
 	public int mode, camera, selected;
 	
 	private static final int KEY_HOLD = 450, KEY_FIRE_WAIT = 50;
-	private int downHeld, upHeld;
+	private int downHeld, upHeld, lastListSize;
 	
 	private int cutFromName;
 	
@@ -109,6 +109,11 @@ public class MenuList<T> extends Component {
 	public void update(int delta) throws SlickException {
 		super.update(delta);
 		
+		if (entries.size() != lastListSize) {
+			
+			clampCam();
+		}
+		
 		if (downHeld >= 0) {
 			
 			downHeld += delta;
@@ -118,7 +123,6 @@ public class MenuList<T> extends Component {
 				down(false);
 				downHeld = KEY_HOLD - KEY_FIRE_WAIT;
 			}
-			
 		}
 		
 		if (upHeld >= 0) {
@@ -130,8 +134,9 @@ public class MenuList<T> extends Component {
 				up(false);
 				upHeld = KEY_HOLD - KEY_FIRE_WAIT;
 			}
-			
 		}
+		
+		lastListSize = entries.size();
 		
 	}
 	
@@ -689,15 +694,12 @@ public class MenuList<T> extends Component {
 				camera = selY;
 			}
 			
-			camera = FastMath.clampToRange(camera, 0, Math.max(FastMath.ceilInt((float)entries.size() / (float)getEntriesH()) - getEntriesV(), 0));
-			
 		} else {
 		
 			if (camera >= selected) { camera = selected; }
-			
-			camera = FastMath.clampToRange(camera, 0, Math.max(entries.size() - getMaxEntries(), 0));
-			
 		}
+		
+		clampCam();
 		
 	}
 	
@@ -712,16 +714,22 @@ public class MenuList<T> extends Component {
 				camera = Math.max(selY - (getEntriesV()-1), 0);
 			}
 			
-			camera = FastMath.clampToRange(camera, 0, Math.max(FastMath.ceilInt((float)entries.size() / (float)getEntriesH()) - getEntriesV(), 0));
-			
 		} else {
 		
 			if (camera + (getMaxEntries()-1) < selected) { camera = Math.max(selected - (getMaxEntries()-1), 0); }
-			
-			camera = FastMath.clampToRange(camera, 0, Math.max(entries.size() - getMaxEntries(), 0));
-			
 		}
 		
+		clampCam();
+		
+	}
+	
+	protected void clampCam() {
+		
+		if (mode == MODE_TABLE) {
+			
+			camera = FastMath.clampToRange(camera, 0, Math.max(FastMath.ceilInt((float)entries.size() / (float)getEntriesH()) - getEntriesV(), 0));
+			
+		} else { camera = FastMath.clampToRange(camera, 0, Math.max(entries.size() - getMaxEntries(), 0)); }
 	}
 	
 	public void setFocus(int index) {

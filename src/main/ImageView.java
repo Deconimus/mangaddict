@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.BigImage;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.ImageStruct;
@@ -29,7 +28,7 @@ public class ImageView extends Scene {
 	public long loadTimer;
 	
 	public File mangdir, chapdir, curfile, cachFiles[];
-	public BigImage[] cached;
+	public Image[] cached;
 	public ImageStruct[] structs;
 	
 	public int curImg, curFileDirInd, curChapDirInd, pageturned;
@@ -169,7 +168,6 @@ public class ImageView extends Scene {
 			} else if (prevchapfiles != null && prevchapfiles.size() + n >= 0) {
 				
 				cachFiles[CACHED_BACK-i] = prevchapfiles.get(prevchapfiles.size()+n);
-				
 			}
 			
 		}
@@ -185,7 +183,6 @@ public class ImageView extends Scene {
 			} else if (nextchapfiles != null && n - chapfiles.size() < nextchapfiles.size()) {
 				
 				cachFiles[CACHED_BACK+i] = nextchapfiles.get(n - chapfiles.size());
-				
 			}
 			
 		}
@@ -201,15 +198,17 @@ public class ImageView extends Scene {
 			
 			bgCol = new Color(Color.white);
 			textCol = new Color(Color.black);
-			
 		}
 		
 		System.out.println("Opened ImageView with \""+file.getAbsolutePath().replace("\\", "/")+"\".");
 		
-		cached = new BigImage[CACHED_BACK + 1 + CACHED_FRONT];
+		cached = new Image[CACHED_BACK + 1 + CACHED_FRONT];
 		curImg = CACHED_BACK;
 		
-		cached[curImg] = new BigImage(curfile.getAbsolutePath());
+		ImageStruct struct = TJUtil.getImageStruct(curfile);
+		struct.filter = Image.FILTER_LINEAR;
+		
+		cached[curImg] = new Image(struct);
 		cached[curImg].setFilter(Image.FILTER_LINEAR);
 		cached[curImg].setName(curfile.getName());
 		
@@ -249,18 +248,22 @@ public class ImageView extends Scene {
 					if (file != null && (structs[i] == null || !cachFiles[i].getName().equals(structs[i].fileName))) {
 							
 						try {
-								
-							structs[i] = new ImageStruct(file.getAbsolutePath(), Image.FILTER_LINEAR);
-								
-						} catch (Exception e) { }
 							
+							//System.out.println(file.getName());
+							
+							structs[i] = TJUtil.getImageStruct(file);
+							structs[i].filter = Image.FILTER_LINEAR;
+							
+							//structs[i] = new ImageStruct(file.getAbsolutePath(), Image.FILTER_LINEAR);
+							
+						} catch (Exception e) { e.printStackTrace(); }
+						
 					}
 						
 					if (i < CACHED_BACK) { i--; }
 					else { i++; }
 					
 					if (i >= structs.length) { i = CACHED_BACK-1; }
-					
 				}
 				
 				cachLoadInd.set(-1);
@@ -382,7 +385,7 @@ public class ImageView extends Scene {
 			
 			if (cached[i] == null && i != cachLoadInd.get() && cachFiles[i] != null && structs[i] != null && structs[i].fileName.equals(fileName)) {
 				
-				cached[i] = new BigImage(structs[i]);
+				cached[i] = new Image(structs[i]);
 				cached[i].setFilter(Image.FILTER_LINEAR);
 				cached[i].setName(fileName);
 				
@@ -541,7 +544,6 @@ public class ImageView extends Scene {
 		}
 		
 		g.setColor(textCol, 1f);
-		
 	}
 	
 	private void renderAltChapterInfo(Graphics g) {
@@ -628,11 +630,12 @@ public class ImageView extends Scene {
 				
 				cached[i] = cached[i-1];
 				cachFiles[i] = cachFiles[i-1];
-				
+				structs[i] = structs[i-1];
 			}
 			
 			cachFiles[0] = null;
 			cached[0] = null;
+			structs[0] = null;
 			
 			int n = curFileDirInd - CACHED_BACK;
 			if (n >= 0) { cachFiles[0] = chapfiles.get(n); }
@@ -688,10 +691,12 @@ public class ImageView extends Scene {
 				
 				cached[i] = cached[i+1];
 				cachFiles[i] = cachFiles[i+1];
+				structs[i] = structs[i+1];
 			}
 			
 			cachFiles[cachFiles.length-1] = null;
 			cached[cached.length-1] = null;
+			structs[structs.length-1] = null;
 			
 			int n = curFileDirInd + CACHED_FRONT;
 			if (n < chapfiles.size()) { cachFiles[cachFiles.length-1] = chapfiles.get(n); }
@@ -705,7 +710,6 @@ public class ImageView extends Scene {
 			if (chapterChanged) { saveLastRead(); }
 			
 			pageturned = 1;
-			
 		}
 		
 	}
@@ -734,7 +738,6 @@ public class ImageView extends Scene {
 		if (getImgRenderWidth(cached[curImg]) > Display.getWidth() * 0.667f) { chtime = -(int)(chtimeEnd * 0.5f); }
 		
 		getChapInfo();
-		
 	}
 	
 	private void nextChapter() {
@@ -760,7 +763,6 @@ public class ImageView extends Scene {
 		if (getImgRenderWidth(cached[curImg]) > Display.getWidth() * 0.667f) { chtime = -(int)(chtimeEnd * 0.5f); }
 		
 		getChapInfo();
-		
 	}
 	
 	private void checkForNulls() {
@@ -772,15 +774,20 @@ public class ImageView extends Scene {
 				int n = curFileDirInd - (CACHED_BACK - i);
 				
 				if (n < 0 && prevchapfiles != null && prevchapfiles.size() + n >= 0) {
-					
-					cachFiles[i] = prevchapfiles.get(prevchapfiles.size() + n + 1);
+					int ind = prevchapfiles.size() + n + 1;
+					if (ind >= 0 && ind < prevchapfiles.size()) {
+						
+						cachFiles[i] = prevchapfiles.get(ind);
+					}
 					
 				} else if (n >= chapfiles.size() && nextchapfiles != null && nextchapfiles.size() > n - chapfiles.size() - 1) {
+					int ind = n - chapfiles.size() - 1;
+					if (ind >= 0 && ind < nextchapfiles.size()) {
+						
+						cachFiles[i] = nextchapfiles.get(ind);
+					}
 					
-					cachFiles[i] = nextchapfiles.get(n - chapfiles.size() - 1);
-					
-				} else { cachFiles[i] = chapfiles.get(n); }
-				
+				} else if (n >= 0 && n < chapfiles.size()) { cachFiles[i] = chapfiles.get(n); }
 			}
 			
 		}

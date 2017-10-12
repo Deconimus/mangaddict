@@ -56,7 +56,6 @@ public class Main extends BasicGame {
 		mouseX = 0f; mouseY = 0f;
 		lXAxis = 0f; lYAxis = 0f;
 		rXAxis = 0f; rYAxis = 0f;
-		
 	}
 	
 	
@@ -65,7 +64,6 @@ public class Main extends BasicGame {
 		
 		mouseDown = new boolean[12];
 		for (int i = 0; i < mouseDown.length; i++) { mouseDown[i] = false; }
-		
 	}
 	
 	public static void main(String[] args) throws SlickException {
@@ -93,7 +91,9 @@ public class Main extends BasicGame {
 			} catch (Exception e) {}
 		}
 		
-		//System.setProperty("org.lwjgl.librarypath", new File(abspath+"/bin/natives/windows&linux").getAbsolutePath());
+		parseArgs(args);
+		
+		//System.setProperty("org.lwjgl.librarypath", new File(abspath+"/lib/natives/windows&linux").getAbsolutePath());
 		//System.out.println(System.getProperty("org.lwjgl.librarypath"));
 		
 		Renderer.setRenderer(Renderer.VERTEX_ARRAY_RENDERER);
@@ -546,6 +546,31 @@ public class Main extends BasicGame {
 			
 		} catch (Exception | Error e) { e.printStackTrace(); }
 		
+	}
+	
+	public static void parseArgs(String[] args) {
+		
+		for (int i = 0; i < args.length; i++) {
+			String arg = args[i].toLowerCase();
+			String nextArg = null;
+			if (i+1 < args.length && !args[i+1].startsWith("-")) { nextArg = args[i+1].toLowerCase(); }
+			
+			if (nextArg != null) {
+				
+				if (arg.equals("--monitor")) {
+					
+					int monitor = -1;
+					try { monitor = (int)(Double.parseDouble(nextArg)); } catch (Exception | Error e) {}
+					
+					int deviceNum = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices().length;
+					
+					if (monitor >= 0 && monitor < deviceNum) {
+						
+						Settings.video_monitor = monitor;
+					}
+				}
+			}
+		}
 	}
 
 }

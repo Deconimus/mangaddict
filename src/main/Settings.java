@@ -313,7 +313,6 @@ public class Settings {
 		Display.setLocation(x, y);
 		
 		Main.displayScale = (float)Display.getHeight() / 1080f;
-		
 	}
 	
 	public static void save() {

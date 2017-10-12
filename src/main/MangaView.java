@@ -27,23 +27,28 @@ import components.MenuList;
 import components.PosterPanel;
 import components.PosterSelect;
 import mangaLib.MangaInfo;
+import visionCore.dataStructures.tuples.Tuple;
 import visionCore.geom.Vector2f;
 import visionCore.math.FastMath;
 import visionCore.util.Files;
+import visionCore.util.Lists;
 
 public class MangaView extends Menu {
 
+	
 	public static final int MODE_POSTER_ROW = 0, MODE_LIST = 1, MODE_TABLE = 2;
+	
+	public static boolean showHidden = false;
+	
+	public static Vector2f selectedCenter;
 	
 	
 	public int mode, sortMode;
-	public boolean showHidden;
 	
 	public List<MangaInfo> infos;
 	
 	public MangaList list;
 	
-	public static Vector2f selectedCenter;
 	public Component cm;
 	
 	public PosterPanel posterP;
@@ -62,17 +67,15 @@ public class MangaView extends Menu {
 		setBG(GUIRes.menubg);
 		this.title = "MANGA";
 		
-		this.selectedCenter = new Vector2f(0f, 0f);
+		selectedCenter = new Vector2f(0f, 0f);
 		
 		HashMap<String, MangaInfo> mangas = Mangas.mangas.get();
-		
-		this.showHidden = false;
 		
 		this.infos = new ArrayList<MangaInfo>(mangas.size());
 		
 		for (MangaInfo info : mangas.values()) {
 			
-			if (!info.hidden) { infos.add(info); }
+			if (showHidden || !info.hidden) { infos.add(info); }
 		}
 		
 		MangaList.sortInfos(infos, sortMode);
@@ -290,11 +293,14 @@ public class MangaView extends Menu {
 				
 				showHidden = !showHidden;
 				
-				components.remove(list);
-				list.clear();
-				
 				String selectedTitle = list.entries.get(list.selected).title.toLowerCase();
 				int ind = list.selected;
+				
+				if (!showHidden && list.entries.get(list.selected).hidden) {
+					
+					MangaInfo nearest = Lists.nearest(list.entries, ind, nfo -> !nfo.hidden);
+					if (nearest != null) { selectedTitle = nearest.title.toLowerCase(); }
+				}
 				
 				if (showHidden) {
 					
@@ -302,7 +308,11 @@ public class MangaView extends Menu {
 					
 					for (MangaInfo m : mangas.values()) {
 						
-						if (m.hidden) { infos.add(m); }
+						if (m.hidden) {
+							
+							infos.add(m);
+							list.postersToLoad.get().add(new Tuple<String, String>(m.title, m.poster));
+						}
 					}
 					
 				} else {
@@ -310,7 +320,12 @@ public class MangaView extends Menu {
 					for (Iterator<MangaInfo> it = infos.iterator(); it.hasNext();) {
 						MangaInfo m = it.next();
 						
-						if (m.hidden) { it.remove(); }
+						if (m.hidden) {
+							
+							try { list.posters.get(m.title).destroy(); } catch (Exception e) {}
+							list.posters.remove(m.title);
+							it.remove();
+						}
 					}
 				}
 				
@@ -325,8 +340,7 @@ public class MangaView extends Menu {
 					}
 				}
 				ind = FastMath.clampToRangeC(ind, 0, infos.size()-1);
-				
-				initMangaList(infos, ind);
+				list.setFocus(ind);
 			}
 			
 		}
@@ -565,24 +579,5 @@ public class MangaView extends Menu {
 		}
 		
 	}
-	
-	/*
-	private Image loadPoster(String title, String poster) {
-		
-		File imgFile = new File(Settings.metaIn+"/"+title+"/_metadata/posters/"+poster);
-		Files.waitOnFile(imgFile, 2);
-		
-		Image img = null;
-		
-		try {
-			
-			img = new Image(imgFile.getAbsolutePath());
-			img.setFilter(Image.FILTER_LINEAR);
-			img.setName(imgFile.getName());
-			
-		} catch (Exception e) {}
-		
-		return img;
-	}*/
 	
 }

@@ -2,6 +2,7 @@ package main;
 
 import static main.Main.displayScale;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -82,7 +83,8 @@ public class GUIRes {
 						
 						try {
 							
-							structs[index] = new ImageStruct(refs[index], Image.FILTER_LINEAR);
+							//structs[index] = new ImageStruct(refs[index], Image.FILTER_LINEAR);
+							structs[index] = TJUtil.getImageStruct(new File(refs[index]));
 							
 						} catch (Exception e) { e.printStackTrace(); }
 					}
