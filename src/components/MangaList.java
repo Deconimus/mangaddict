@@ -31,7 +31,6 @@ import org.newdawn.slick.opengl.LoadableImageData;
 import main.GUIRes;
 import main.Mangas;
 import main.Settings;
-import main.TJUtil;
 import mangaLib.MangaInfo;
 import visionCore.dataStructures.tuples.Triplet;
 import visionCore.dataStructures.tuples.Tuple;
@@ -139,17 +138,21 @@ public class MangaList extends MenuList<MangaInfo> {
 						File imgF = new File(metadir.getAbsolutePath()+"/"+info.title+"/_metadata/posters/"+info.poster);
 						if (!imgF.exists()) { return; }
 						
-						ImageStruct struct = TJUtil.getImageStruct(imgF);
+						try {
 						
-						ImageData imageData = struct.data;
-						ByteBuffer imageBuffer = struct.data.getImageBufferData();
-						
-						if (imageData != null && imageBuffer != null) {
+							ImageStruct struct = new ImageStruct(imgF);
 							
-							Triplet<String, ByteBuffer, ImageData> data = new Triplet<String, ByteBuffer, ImageData>(info.title, imageBuffer, imageData);
+							ImageData imageData = struct.data;
+							ByteBuffer imageBuffer = struct.data.getImageBufferData();
 							
-							startingImgs.set(ind, data);
-						}
+							if (imageData != null && imageBuffer != null) {
+								
+								Triplet<String, ByteBuffer, ImageData> data = new Triplet<String, ByteBuffer, ImageData>(info.title, imageBuffer, imageData);
+								
+								startingImgs.set(ind, data);
+							}
+							
+						} catch (Exception e) { e.printStackTrace(); }
 						
 					}
 					
@@ -382,7 +385,7 @@ public class MangaList extends MenuList<MangaInfo> {
 				Image img = null;
 				try {
 					
-					img = new Image(TJUtil.getImageStruct(new File(Settings.metaIn+"/"+key+"/_metadata/posters/"+info.poster)));
+					img = new Image(Settings.metaIn+"/"+key+"/_metadata/posters/"+info.poster);
 					img.setName(info.poster);
 					
 				} catch (Exception e) { e.printStackTrace(); }

@@ -9,6 +9,42 @@ Skipping "Bleach"
 
 Skipping "Boku wa Mari no Naka"
 
+Downloading or updating "Chi no Wadachi"
+
+Saving chapter 15 - "Salvation":
+
+URL: "https://mangaseeonline.net/read-online/chi-no-wadachi-chapter-15"
+Chapter consists of 26 pages.
+
+Saved 013.jpg
+Saved 022.jpg
+Saved 026.jpg
+Saved 005.jpg
+Saved 025.jpg
+Saved 012.jpg
+Saved 010.jpg
+Saved 019.jpg
+Saved 009.jpg
+Saved 008.jpg
+Saved 023.jpg
+Saved 007.jpg
+Saved 015.jpg
+Saved 020.jpg
+Saved 001.jpg
+Saved 018.jpg
+Saved 021.jpg
+Saved 006.jpg
+Saved 011.jpg
+Saved 024.jpg
+Saved 016.jpg
+Saved 014.jpg
+Saved 004.jpg
+Saved 017.jpg
+Saved 002.jpg
+Saved 003.jpg
+
+All done.
+
 Skipping "Dragon Ball"
 
 Downloading or updating "Happiness"
@@ -24,6 +60,37 @@ Downloading or updating "Onepunch-Man"
 No chapters found..
 
 Downloading or updating "ReLIFE"
+
+Saving chapter 201 - "Adult Relationship":
+
+URL: "http://mangaseeonline.net/read-online/Re-L-I-F-E-chapter-201"
+Chapter consists of 25 pages.
+
+Saved 005.jpg
+Saved 022.jpg
+Saved 006.jpg
+Saved 004.jpg
+Saved 008.jpg
+Saved 003.jpg
+Saved 001.jpg
+Saved 020.jpg
+Saved 002.jpg
+Saved 017.jpg
+Saved 014.jpg
+Saved 021.jpg
+Saved 018.jpg
+Saved 009.jpg
+Saved 019.jpg
+Saved 007.jpg
+Saved 011.jpg
+Saved 012.jpg
+Saved 010.jpg
+Saved 025.jpg
+Saved 023.jpg
+Saved 016.jpg
+Saved 015.jpg
+Saved 024.jpg
+Saved 013.jpg
 
 All done.
 
@@ -44,6 +111,11 @@ Skipping "Sweet Poolside"
 Skipping "System Engineer"
 
 Downloading or updating "The Gamer"
+
+Saving chapter 195 - "new":
+
+URL: "//mangafox.me/manga/the_gamer/v03/c195/1.html"
+Chapter length unknown...
 
 All done.
 
@@ -601,13 +673,9 @@ Saving chapter 199 - "":
 URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c199/1.html"
 Chapter length unknown...
 
-java.io.IOException: Access is denied
 Saving chapter 200 - "":
 
-	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
-	at java.io.File.createNewFile(Unknown Source)
 URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c200/1.html"
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
 Chapter length unknown...
 
 Saving chapter 201 - "":
@@ -2949,35 +3017,40 @@ Saving chapter 665 - "That Casually":
 
 URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c665/1.html"
 Chapter length unknown...
-java.io.FileNotFoundException: D:\Dropbox\Data\Manga-Metadata\Tomo-chan Wa Onnanoko!\_metadata\info.xml (Access is denied)
-	at java.io.FileOutputStream.open0(Native Method)
-	at java.io.FileOutputStream.open(Unknown Source)
-	at java.io.FileOutputStream.<init>(Unknown Source)
-	at java.io.FileOutputStream.<init>(Unknown Source)
-	at java.io.FileWriter.<init>(Unknown Source)
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:309)
+
+Saving chapter 666 - "Equal":
+
+URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c666/1.html"
+Chapter length unknown...
+
+Saving chapter 667 - "From Now On":
+
+URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c667/1.html"
+Chapter length unknown...
+
+Saving chapter 668 - "A Confusing First Win":
+
+URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c668/1.html"
+Chapter length unknown...
+
+Saving chapter 669 - "Gorous Conflict":
+
+URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c669/1.html"
+Chapter length unknown...
+
+Saving chapter 670 - "Wont Be Found Like That":
+
+URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c670/1.html"
+Chapter length unknown...
+
+Saving chapter 671 - "It Fit Somehow":
+
+URL: "//mangafox.me/manga/tomo_chan_wa_onnanoko/c671/1.html"
+Chapter length unknown...
 
 All done.
 
-java.io.IOException: Access is denied
-	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
-	at java.io.File.createNewFile(Unknown Source)
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
-java.io.IOException: Access is denied
-	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
-	at java.io.File.createNewFile(Unknown Source)
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
-java.io.IOException: Access is denied
-	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
-	at java.io.File.createNewFile(Unknown Source)
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
-Exception in thread "Thread-86" Exception in thread "Thread-43" java.lang.IllegalThreadStateException
-	at java.lang.Thread.start(Unknown Source)
-	at mangaLib.MangaInfo$2.run(MangaInfo.java:320)
-java.lang.IllegalThreadStateException
-	at java.lang.Thread.start(Unknown Source)
-	at mangaLib.MangaInfo$2.run(MangaInfo.java:320)
-Exception in thread "Thread-218" java.lang.IllegalThreadStateException
+Exception in thread "Thread-1093" java.lang.IllegalThreadStateException
 	at java.lang.Thread.start(Unknown Source)
 	at mangaLib.MangaInfo$2.run(MangaInfo.java:320)
 java.io.IOException: Access is denied
@@ -2988,6 +3061,15 @@ java.io.IOException: Access is denied
 	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
 	at java.io.File.createNewFile(Unknown Source)
 	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
+Exception in thread "Thread-395" java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Unknown Source)
+	at mangaLib.MangaInfo$2.run(MangaInfo.java:320)
+Exception in thread "Thread-138" java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Unknown Source)
+	at mangaLib.MangaInfo$2.run(MangaInfo.java:320)
+Exception in thread "Thread-1696" java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Unknown Source)
+	at mangaLib.MangaInfo$2.run(MangaInfo.java:320)
 java.io.IOException: Access is denied
 	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
 	at java.io.File.createNewFile(Unknown Source)
@@ -3008,15 +3090,6 @@ java.io.IOException: Access is denied
 	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
 	at java.io.File.createNewFile(Unknown Source)
 	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
-java.io.IOException: Access is denied
-	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
-	at java.io.File.createNewFile(Unknown Source)
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
-java.io.IOException: Access is denied
-	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
-	at java.io.File.createNewFile(Unknown Source)
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
-java.io.IOException: Access is denied
-	at java.io.WinNTFileSystem.createFileExclusively(Native Method)
-	at java.io.File.createNewFile(Unknown Source)
-	at mangaLib.MangaInfo$2$1.run(MangaInfo.java:306)
+Exception in thread "Thread-742" java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Unknown Source)
+	at mangaLib.MangaInfo$2.run(MangaInfo.java:320)

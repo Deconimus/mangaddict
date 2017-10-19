@@ -120,7 +120,7 @@ public class Mangas {
 				Image img = null;
 				try {
 					
-					ImageStruct struct = TJUtil.getImageStruct(thumb);
+					ImageStruct struct = new ImageStruct(thumb);
 					img = new Image(struct);
 					img.setName(thumb.getName().substring(0, thumb.getName().lastIndexOf(".")));
 				} catch (Exception e) {}
@@ -161,7 +161,7 @@ public class Mangas {
 					Image img = null;
 					try {
 						
-						img = new Image(TJUtil.getImageStruct(thumbf));
+						img = new Image(thumbf.getAbsolutePath());
 						img.setName(thumbf.getName());
 					} catch (Exception e) {}
 					

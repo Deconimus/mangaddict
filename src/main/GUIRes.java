@@ -83,8 +83,7 @@ public class GUIRes {
 						
 						try {
 							
-							//structs[index] = new ImageStruct(refs[index], Image.FILTER_LINEAR);
-							structs[index] = TJUtil.getImageStruct(new File(refs[index]));
+							structs[index] = new ImageStruct(refs[index], Image.FILTER_LINEAR);
 							
 						} catch (Exception e) { e.printStackTrace(); }
 					}

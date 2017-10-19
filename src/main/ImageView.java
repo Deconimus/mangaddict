@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -205,7 +206,9 @@ public class ImageView extends Scene {
 		cached = new Image[CACHED_BACK + 1 + CACHED_FRONT];
 		curImg = CACHED_BACK;
 		
-		ImageStruct struct = TJUtil.getImageStruct(curfile);
+		ImageStruct struct = null;
+		try { struct = new ImageStruct(curfile); } 
+		catch (IOException e) { }
 		struct.filter = Image.FILTER_LINEAR;
 		
 		cached[curImg] = new Image(struct);
@@ -251,7 +254,7 @@ public class ImageView extends Scene {
 							
 							//System.out.println(file.getName());
 							
-							structs[i] = TJUtil.getImageStruct(file);
+							structs[i] = new ImageStruct(file);
 							structs[i].filter = Image.FILTER_LINEAR;
 							
 							//structs[i] = new ImageStruct(file.getAbsolutePath(), Image.FILTER_LINEAR);

@@ -196,8 +196,7 @@ public class ChapterView extends Menu {
 						
 						File posterFile = new File(Settings.metaIn+"/"+mangaInfo.title+"/_metadata/posters/"+mangaInfo.poster);
 						
-						//ImageStruct data = new ImageStruct(posterFile, Image.FILTER_LINEAR);
-						ImageStruct data = TJUtil.getImageStruct(posterFile);
+						ImageStruct data = new ImageStruct(posterFile, Image.FILTER_LINEAR);
 						
 						if (data != null) {
 							

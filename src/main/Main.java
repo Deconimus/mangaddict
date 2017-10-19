@@ -22,6 +22,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.opengl.LibJPEGTurboImageData;
 import org.newdawn.slick.opengl.renderer.Renderer;
 
 import visionCore.geom.Vector2f;
@@ -95,6 +96,8 @@ public class Main extends BasicGame {
 		
 		//System.setProperty("org.lwjgl.librarypath", new File(abspath+"/lib/natives/windows&linux").getAbsolutePath());
 		//System.out.println(System.getProperty("org.lwjgl.librarypath"));
+		
+		System.out.println("Native Imageloading: "+LibJPEGTurboImageData.nativeWorks);
 		
 		Renderer.setRenderer(Renderer.VERTEX_ARRAY_RENDERER);
 		
