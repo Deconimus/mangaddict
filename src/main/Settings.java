@@ -132,7 +132,6 @@ public class Settings {
 		video_showFPS = false;
 		video_targetFPS = -1;
 		
-		
 		File xml = new File(Main.abspath+"/res/settings.xml");
 		if (xml.exists()) {
 			
@@ -213,7 +212,6 @@ public class Settings {
 			}
 			
 		}
-		
 		
 		video_monitor = FastMath.clampToRange(video_monitor, 0, devices.length-1);
 		
