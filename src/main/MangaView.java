@@ -84,7 +84,9 @@ public class MangaView extends Menu {
 		for (int i = 0; i < infos.size(); i++) {
 			MangaInfo info = infos.get(i);
 			
-			info.read = Files.getFiles(Settings.mangaDir+"/"+info.title, f1 -> f1.isDirectory() && !f1.getName().startsWith("_")).size() <= info.readChapters.size();
+			int numChaps = Files.getFiles(Settings.mangaDir+"/"+info.title, f1 -> f1.isDirectory() && !f1.getName().startsWith("_")).size();
+			info.read = info.readChapters.size() >= numChaps;
+			//info.read = (info.bundled <= 0 && numChaps <= info.readChapters.size()) || (numChaps * info.bundled <= info.readChapters.size());
 			
 			if (lastTitle != null && lastTitle.trim().length() > 0 &&
 				info.title.toLowerCase().trim().equals(lastTitle.toLowerCase().trim())) {

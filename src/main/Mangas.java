@@ -81,7 +81,6 @@ public class Mangas {
 			if (!mangaf.exists()) { continue; }
 			
 			mangasMap.put(title.toLowerCase(), info);
-			
 		}
 		
 		mangas.set(mangasMap);
@@ -120,8 +119,8 @@ public class Mangas {
 				Image img = null;
 				try {
 					
-					ImageStruct struct = new ImageStruct(thumb);
-					img = new Image(struct);
+					img = new Image(new ImageStruct(thumb));
+					img.setFilter(Image.FILTER_LINEAR);
 					img.setName(thumb.getName().substring(0, thumb.getName().lastIndexOf(".")));
 				} catch (Exception e) {}
 				
@@ -162,6 +161,7 @@ public class Mangas {
 					try {
 						
 						img = new Image(thumbf.getAbsolutePath());
+						img.setFilter(Image.FILTER_LINEAR);
 						img.setName(thumbf.getName());
 					} catch (Exception e) {}
 					
