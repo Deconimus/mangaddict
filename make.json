@@ -1,0 +1,33 @@
+{
+	"jarName": "MangAddict.jar",
+	"outDir": ["release", "C:/Program Files/MangAddict"],
+	"main": "main.Main",
+	"sourceDirs": ["src"],
+	"imports": [
+		"../VisionCore",
+		"../MangaLib",
+		"../Slick",
+		"lib/jinput.jar",
+		"lib/lwjgl.jar",
+		"lib/lwjgl_util.jar",
+		"lib/dom4j-2.0.0-RC1.jar",
+		"lib/turbojpeg.jar"
+	],
+	"packFiles": ["README.md", "LICENSE"],
+	"copyFiles": [
+		"icon.ico",
+		"res",
+		["lib/natives", "bin/natives"]
+	],
+	"target": "jar",
+	"runScripts": ["py", "bat", "sh"],
+	"runOptions": [
+		"-Djava.library.path=\"bin/natives/windows&linux\""
+	],
+	
+	"jarShrink": {
+		
+		"path": "C:/Program Files/jarShrink/jarShrink.jar",
+		"keep": ["net.java.games.input", "mangaLib", "org.newdawn.slick.opengl"]
+	}
+}

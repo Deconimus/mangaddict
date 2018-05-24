@@ -4,3 +4,5 @@ bin/
 manga/
 jarBuilder/__pycache__/
 jarBuilder/tmpLibStore/
+.jarMakeCache/
+release/
