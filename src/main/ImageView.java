@@ -858,7 +858,6 @@ public class ImageView extends Scene {
 				} else {
 					
 					prevPage();
-					
 				}
 				
 			} else if (button == 3) {
@@ -868,11 +867,8 @@ public class ImageView extends Scene {
 			} else if (button == 4) {
 				
 				nextPage();
-				
 			}
-			
 		}
-		
 	}
 	
 	@Override

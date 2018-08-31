@@ -15,9 +15,10 @@
 		<targetFPS>-1</targetFPS>
 		<showFPS>false</showFPS>
 		<bicubicFiltering>false</bicubicFiltering>
-		<monitor>0</monitor>
+		<monitor>1</monitor>
 		<dodgeTaskbar>0</dodgeTaskbar>
 		<windowDecoration>false</windowDecoration>
+		<alwaysRender>false</alwaysRender>
 	</video>
 	<menu>
 		<flavor>2</flavor>
@@ -38,7 +39,7 @@
 		<mangaAutoUpdate>true</mangaAutoUpdate>
 		<automaticChapterSubstitution>true</automaticChapterSubstitution>
 		<updateEveryHours>24</updateEveryHours>
-		<lastUpdated>1507823937853</lastUpdated>
+		<lastUpdated>1529273092074</lastUpdated>
 	</general>
 	<MAL>
 		<userName>Deconimus</userName>

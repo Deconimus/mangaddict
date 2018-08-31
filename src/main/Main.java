@@ -138,7 +138,7 @@ public class Main extends BasicGame {
 		
 		display.setShowFPS(Settings.video_showFPS);
 		display.setTargetFrameRate(fps);
-		display.setAlwaysRender(false);
+		display.setAlwaysRender(Settings.video_alwaysRender);
 		display.setVSync(false);
 		
 		int x = (int)(r.x + (r.getWidth() - video_resolution.x) * 0.5f);
@@ -207,7 +207,6 @@ public class Main extends BasicGame {
 			}
 			
 		} catch (Exception | Error e) { e.printStackTrace(); }
-		
 	}
 	
 	@Override
@@ -244,19 +243,27 @@ public class Main extends BasicGame {
 				
 				rXAxis = controller.getRXAxisValue();
 				rYAxis = controller.getRYAxisValue();
-				
 			}
-			
 		}
 		
-		for (int i = 0; i < mouseDown.length && display.hadFocus(); i++) {
-			
-			boolean down = in.isMouseButtonDown(i);
-			
-			if (down ^ mouseDown[i]) {
+		if (display.hadFocus()) {
+		
+			for (int i = 0; i < mouseDown.length; ++i) {
 				
-				mouseInput(i, down && !mouseDown[i]);
-				mouseDown[i] = down;
+				boolean down = in.isMouseButtonDown(i);
+				
+				if (down ^ mouseDown[i]) {
+					
+					mouseInput(i, down && !mouseDown[i]);
+					mouseDown[i] = down;
+				}
+			}
+		} else {
+			
+			for (int i = 0; i < mouseDown.length; ++i) {
+				
+				mouseDown[i] = in.isMouseButtonDown(i);
+				in.clearMousePressedRecord();
 			}
 		}
 		
@@ -275,7 +282,6 @@ public class Main extends BasicGame {
 		} catch (Exception | Error e) { e.printStackTrace(); }
 		
 		lastScene = currentScene;
-		
 	}
 	
 	@Override
@@ -325,7 +331,6 @@ public class Main extends BasicGame {
 		} else if (key == Input.KEY_LSHIFT || key == Input.KEY_RSHIFT) {
 			
 			shiftDown = pressed;
-			
 		}
 		
 		try {
@@ -354,9 +359,7 @@ public class Main extends BasicGame {
 				currentScene.mouseInput(button, pressed);
 			}
 			
-			
 		} catch (Exception | Error e) { e.printStackTrace(); }
-		
 	}
 	
 	@Override
@@ -371,7 +374,6 @@ public class Main extends BasicGame {
 			
 			
 		} catch (Exception | Error e) { e.printStackTrace(); }
-		
 	}
 	
 	
@@ -431,7 +433,6 @@ public class Main extends BasicGame {
 		} else if (button == 10) {
 			
 			key = Input.KEY_ADD;
-			
 		}
 		
 		if (key > -1) {

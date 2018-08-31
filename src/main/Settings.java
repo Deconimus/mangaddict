@@ -61,7 +61,7 @@ public class Settings {
 	public static int video_width, video_height, video_targetFPS;
 	public static boolean video_showFPS, video_bicubicFiltering;
 	public static int video_monitor, video_dodgeTaskbar;
-	public static boolean video_windowDecoration;
+	public static boolean video_windowDecoration, video_alwaysRender;
 	
 	public static int menu_flavor, menu_mangaMode;
 	public static String menu_background, menu_download_background, menu_settings_background;
@@ -95,6 +95,7 @@ public class Settings {
 		video_windowDecoration = true;
 		video_dodgeTaskbar = 0;
 		video_bicubicFiltering = false;
+		video_alwaysRender = false;
 		
 		mangaDir = Main.abspath+"/manga";
 		metaIn = mangaDir+"";
