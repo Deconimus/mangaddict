@@ -606,7 +606,6 @@ public class ImageView extends Scene {
 		
 		g.setColor(textCol.copy().setAlpha(0.5f));
 		g.fillRoundRect((int)x, -(int)((camY / h) * Display.getHeight()), 5, (int)((Display.getHeight() / h) * Display.getHeight()), 10);
-		
 	}
 	
 	
@@ -614,7 +613,13 @@ public class ImageView extends Scene {
 		
 		if (cached[CACHED_BACK-1] == null) {
 			
-			pageActionQueue = -1;
+			double chapterNr = 42;
+			try { chapterNr = Double.parseDouble(chnrstr.trim()); } catch (Exception e) {}
+			
+			if (!(curFileDirInd == 0 && chapterNr <= 1.0)) { // don't enqueue a page turn if it's the very first page anyway 
+				
+				pageActionQueue = -1;
+			}
 			return;
 		}
 		

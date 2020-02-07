@@ -15,7 +15,7 @@
 		<targetFPS>-1</targetFPS>
 		<showFPS>false</showFPS>
 		<bicubicFiltering>false</bicubicFiltering>
-		<monitor>1</monitor>
+		<monitor>3</monitor>
 		<dodgeTaskbar>0</dodgeTaskbar>
 		<windowDecoration>false</windowDecoration>
 		<alwaysRender>false</alwaysRender>
@@ -34,12 +34,12 @@
 	<general>
 		<bootInto>0</bootInto>
 		<mangaDir>H:/Mangas</mangaDir>
-		<metaIn>D:/Dropbox/Data/Manga-Metadata</metaIn>
+		<metaIn>D:/Google Drive/Data/Manga-Metadata</metaIn>
 		<mangadlPath></mangadlPath>
 		<mangaAutoUpdate>true</mangaAutoUpdate>
 		<automaticChapterSubstitution>true</automaticChapterSubstitution>
 		<updateEveryHours>24</updateEveryHours>
-		<lastUpdated>1529273092074</lastUpdated>
+		<lastUpdated>1537479975730</lastUpdated>
 	</general>
 	<MAL>
 		<userName>Deconimus</userName>
