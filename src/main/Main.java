@@ -94,8 +94,8 @@ public class Main extends BasicGame {
 		
 		parseArgs(args);
 		
-		System.setProperty("org.lwjgl.librarypath", new File(abspath+"/lib/natives/windows&linux").getAbsolutePath());
-		System.out.println(System.getProperty("org.lwjgl.librarypath"));
+		//System.setProperty("org.lwjgl.librarypath", new File(abspath+"/lib/natives/windows&linux").getAbsolutePath());
+		//System.out.println(System.getProperty("org.lwjgl.librarypath"));
 		
 		System.out.println("Native Imageloading: "+LibJPEGTurboImageData.nativeWorks);
 		
