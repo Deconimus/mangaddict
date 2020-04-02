@@ -117,11 +117,8 @@ public class LoadingScene extends Scene {
 			} else if (Settings.bootInto == Settings.BOOT_LAST_CHAPTER) {
 				
 				try { Main.currentScene = new ChapterView(Mangas.lastRead); } catch (Exception e) { e.printStackTrace(); }
-				
 			}
-			
 		}
-		
 	}
 	
 	@Override

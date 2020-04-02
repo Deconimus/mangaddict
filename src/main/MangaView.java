@@ -2,6 +2,7 @@ package main;
 
 import static main.Main.displayScale;
 import static main.Mangas.POSTER_HEIGHT;
+import static main.Mangas.POSTER_WIDTH;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import components.ContextMenu;
 import components.MangaInfoPanel;
 import components.MangaList;
 import components.MangaPosterRow;
+import components.MangaPosterRowVertical;
 import components.MangaTable;
 import components.MenuList;
 import components.PosterPanel;
@@ -113,19 +115,36 @@ public class MangaView extends Menu {
 			
 			this.contentpanel.setX(200f * displayScale);
 			
-			float dsh = (Display.getWidth() / 1920f);
-			
-			Rectangle listpane = new Rectangle(200f * dsh, Display.getHeight() - POSTER_HEIGHT * 0.75f * displayScale - 100f * displayScale,
-												Display.getWidth() - 200f * 2f * dsh, POSTER_HEIGHT * 0.75f * displayScale);
-			
-			list = new MangaPosterRow(infos, new File(Settings.metaIn), null, listpane, false, index) {
+			if (Display.getWidth() >= Display.getHeight()) {
 				
-				@Override
-				public void onAction(MangaInfo entry) {
+				float dsh = (Display.getWidth() / 1920f);
+				
+				Rectangle listpane = new Rectangle(200f * dsh, Display.getHeight() - POSTER_HEIGHT * 0.75f * displayScale - 100f * displayScale,
+													Display.getWidth() - 200f * 2f * dsh, POSTER_HEIGHT * 0.75f * displayScale);
+				
+				list = new MangaPosterRow(infos, new File(Settings.metaIn), null, listpane, false, index) {
 					
-					mangaOnAction(entry, posters);
-				}
-			};
+					@Override
+					public void onAction(MangaInfo entry) {
+						
+						mangaOnAction(entry, posters);
+					}
+				};
+				
+			} else {
+				
+				Rectangle listpane = new Rectangle(100f * displayScale, 250f * displayScale,
+													Display.getWidth() - 125f * displayScale, Display.getHeight() - 350f * displayScale);
+				
+				list = new MangaPosterRowVertical(infos, new File(Settings.metaIn), null, listpane, false, index) {
+					
+					@Override
+					public void onAction(MangaInfo entry) {
+						
+						mangaOnAction(entry, posters);
+					}
+				};
+			}
 			
 			list.setFocus(index);
 			
@@ -153,7 +172,6 @@ public class MangaView extends Menu {
 						
 						tis.posterP.set(entries.get(selected), pstr); 
 					}
-					
 				}
 				
 				@Override

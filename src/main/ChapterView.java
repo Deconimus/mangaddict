@@ -23,6 +23,7 @@ import components.InputPanel;
 import components.MenuList;
 import components.PosterPanel;
 import mangaLib.MangaInfo;
+import mangaLib.Poster;
 import visionCore.geom.Color;
 import visionCore.util.Files;
 
@@ -61,17 +62,36 @@ public class ChapterView extends Menu {
 		this.mangaInfo = Mangas.get(title);
 		this.mangaPoster = poster;
 		
-		posterpane = new Rectangle(0f, 150f * displayScale, GUIRes.posterPanel.getWidth() * displayScale, GUIRes.posterPanel.getHeight() * displayScale);
+		if (Display.getWidth() > Display.getHeight()) { // horizontal mode
 		
-		float pad = 25f * displayScale;
-		
-		float x = (int)((Display.getWidth() - (posterpane.width + pad + contentpanel.width)) * 0.5f);
-		posterpane.setX(x);
-		contentpanel.setX(posterpane.getMaxX() + pad);
-		
-		if (Fonts.roboto.s48.getWidth(this.title) > contentpanel.width) {
+			posterpane = new Rectangle(0f, 150f * displayScale, GUIRes.posterPanel.getWidth() * displayScale, GUIRes.posterPanel.getHeight() * displayScale);
 			
-			titleX = posterpane.x;
+			float pad = 25f * displayScale;
+			
+			float x = (int)((Display.getWidth() - (posterpane.width + pad + contentpanel.width)) * 0.5f);
+			posterpane.setX(x);
+			contentpanel.setX(posterpane.getMaxX() + pad);
+			
+			if (Fonts.roboto.s48.getWidth(this.title) > contentpanel.width) {
+				
+				titleX = posterpane.x;
+			}
+			
+		} else { // vertical mode
+			
+			float pad = 25f * displayScale;
+			
+			posterpane = new Rectangle(pad, 150f * displayScale, Poster.WIDTH * displayScale * 0.75f, Poster.HEIGHT * displayScale * 0.75f);
+			
+			contentpanel.setBounds(pad, posterpane.maxY + pad - 3f * displayScale, 
+					Display.getWidth() - pad * 2, Display.getHeight() - posterpane.maxY - pad * 2);
+			
+			titleX = posterpane.maxX + pad;
+			
+			if (Fonts.roboto.s48.getWidth(this.title) > Display.getWidth() - pad * 3 - posterpane.width) {
+				
+				this.title = title.toUpperCase();
+			}
 		}
 		
 		List<File> chapters = Files.getFiles(mangadir, f -> f.isDirectory() && Character.isDigit(f.getName().charAt(0)));
@@ -213,12 +233,11 @@ public class ChapterView extends Menu {
 			
 		}
 		
-		posterPanel = new PosterPanel(mangaInfo, posterpane, mangaPoster);
-		components.add(posterPanel);
-		
-		float width = 420f;
-		float height = 360f;
-		
+		if (Display.getWidth() > Display.getHeight()) {
+			
+			posterPanel = new PosterPanel(mangaInfo, posterpane, mangaPoster);
+			components.add(posterPanel);
+		}
 	}
 	
 	
@@ -236,6 +255,16 @@ public class ChapterView extends Menu {
 			}
 		}
 		
+	}
+	
+	@Override
+	public void render(Graphics g) throws SlickException {
+		super.render(g);
+		
+		if (Display.getWidth() <= Display.getHeight()) {
+			
+			mangaPoster.draw(posterpane.x, posterpane.y, posterpane.width, posterpane.height);
+		}
 	}
 	
 	
@@ -419,9 +448,7 @@ public class ChapterView extends Menu {
 			try { chnr = Double.parseDouble(chname.substring(0, chname.indexOf(" -"))); } catch (Exception e) {}
 			
 			mangaInfo.readChapters.add(chnr);
-			
 		}
-		
 	}
 	
 	private void saveInfo() {
@@ -441,7 +468,6 @@ public class ChapterView extends Menu {
 		super.clearScene();
 		
 		try { mangaPoster.destroy(); } catch (Exception | Error e) {}
-		
 	}
 	
 }

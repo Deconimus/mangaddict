@@ -25,7 +25,7 @@ public class MenuList<T> extends Component {
 	
 	public List<T> entries;
 	public Rectangle pane;
-	public float entryWidth, entryHeight, padH;
+	public float entryWidth, entryHeight, padH, padV;
 	
 	public int mode, camera, selected;
 	
@@ -35,6 +35,7 @@ public class MenuList<T> extends Component {
 	private int cutFromName;
 	
 	public boolean onScrollbar, drawPanels, drawSplitter, drawEntriesCentered;
+	
 	
 	public MenuList(List<T> entries, Rectangle pane, float entryHeight) {
 		
@@ -72,6 +73,7 @@ public class MenuList<T> extends Component {
 		this.cutFromName = 0;
 		
 		this.padH = 25f * displayScale;
+		this.padV = 0f;
 		
 		this.onScrollbar = false;
 		
@@ -227,7 +229,6 @@ public class MenuList<T> extends Component {
 															20f * displayScale, ha, transp);
 				
 				GUIRes.scrollbar.endUse();
-				
 			}
 			
 		}
@@ -241,7 +242,7 @@ public class MenuList<T> extends Component {
 				float x = pX + pane.x;
 				float y = pY + pane.y;
 				
-				if (mode == MODE_VERTICAL) { y += entryHeight * (i - camera); }
+				if (mode == MODE_VERTICAL) { y += (entryHeight + padV) * (i - camera); }
 				else if (mode == MODE_HORIZONTAL) { x += (entryWidth + padH) * (i - camera); }
 				
 				if (mode != MODE_HORIZONTAL || i != selected) {

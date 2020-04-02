@@ -9,3 +9,8 @@ Skipping "Bleach"
 
 Skipping "Boku wa Mari no Naka"
 
+Exception in thread "main" java.lang.NullPointerException
+	at main.Downloader.download(Downloader.java:35)
+	at main.Main.download(Main.java:248)
+	at main.Main.updateMangaDir(Main.java:272)
+	at main.Main.main(Main.java:175)
